@@ -1,0 +1,400 @@
+===============================================================
+        🎯 最终部署配置总结
+===============================================================
+
+✅ 配置完成项:
+
+1. 端口配置 ✅
+   前端端口: 18200
+   后端端口: 18201
+
+2. 项目路径 ✅
+   服务器路径: /root/home/yuyuan/studyx_human
+
+3. 权限配置 ✅
+   运行用户: root
+   运行组: root
+
+===============================================================
+
+📂 完整路径结构:
+
+/root/home/yuyuan/studyx_human/
+├── web/
+│   ├── backend/                        # 后端目录
+│   │   ├── app/                        # FastAPI 应用
+│   │   ├── venv/                       # Python 虚拟环境
+│   │   ├── uploads/                    # 上传文件目录
+│   │   ├── .env                        # 环境变量 (需要配置)
+│   │   ├── requirements-prod.txt       # 生产依赖
+│   │   └── ...
+│   └── frontend/                       # 前端目录
+│       ├── app/                        # Next.js 应用
+│       ├── .next/                      # 构建输出
+│       ├── .env.production             # 生产环境变量 (需要配置)
+│       └── ...
+└── deploy-scripts/                     # 部署脚本
+    ├── setup-server.sh                 # 服务器环境配置
+    ├── deploy-backend.sh               # 后端部署
+    ├── deploy-frontend.sh              # 前端部署
+    └── setup-nginx.sh                  # Nginx 配置
+
+===============================================================
+
+🚀 完整部署流程:
+
+步骤 1: 上传项目到服务器
+-----------------------
+# 本地打包 (排除不必要的文件)
+cd /Users/yuyuan/studyx_human
+tar -czf studyx.tar.gz \
+  --exclude='node_modules' \
+  --exclude='venv' \
+  --exclude='.next' \
+  --exclude='__pycache__' \
+  --exclude='.git' \
+  --exclude='uploads' \
+  .
+
+# 上传到服务器
+scp studyx.tar.gz root@your-server-ip:/root/home/yuyuan/
+
+# SSH 到服务器
+ssh root@your-server-ip
+
+# 创建目录并解压
+mkdir -p /root/home/yuyuan/studyx_human
+cd /root/home/yuyuan
+tar -xzf studyx.tar.gz -C studyx_human/
+rm studyx.tar.gz
+
+步骤 2: 配置服务器环境 (首次部署)
+-----------------------
+cd /root/home/yuyuan/studyx_human
+bash deploy-scripts/setup-server.sh
+
+# 这个脚本会安装:
+# - Python 3.11
+# - Node.js 18
+# - pnpm
+# - PM2
+# - Nginx
+# - Certbot
+# - 配置防火墙
+
+步骤 3: 配置环境变量
+-----------------------
+# 后端环境变量
+vim /root/home/yuyuan/studyx_human/web/backend/.env
+
+# 必填内容:
+OPENAI_API_KEY=sk-your-actual-key-here
+CORS_ORIGINS=http://localhost:18200,https://yourdomain.com
+HTTP_PROXY=
+HTTPS_PROXY=
+
+# 前端环境变量
+vim /root/home/yuyuan/studyx_human/web/frontend/.env.production
+
+# 内容:
+NEXT_PUBLIC_API_URL=https://api.yourdomain.com
+
+步骤 4: 部署后端
+-----------------------
+cd /root/home/yuyuan/studyx_human
+bash deploy-scripts/deploy-backend.sh
+
+# 这个脚本会:
+# - 创建 Python 虚拟环境
+# - 安装依赖
+# - 配置 Systemd 服务
+# - 启动后端服务 (端口 18201)
+
+步骤 5: 部署前端
+-----------------------
+cd /root/home/yuyuan/studyx_human
+bash deploy-scripts/deploy-frontend.sh
+
+# 这个脚本会:
+# - 安装 Node.js 依赖
+# - 构建生产版本
+# - 使用 PM2 启动前端 (端口 18200)
+
+步骤 6: 配置 Nginx
+-----------------------
+bash deploy-scripts/setup-nginx.sh
+
+# 输入你的域名:
+# - 主域名: yourdomain.com
+# - API 域名: api.yourdomain.com
+
+# 这个脚本会:
+# - 创建 Nginx 配置
+# - 配置反向代理
+# - 重启 Nginx
+
+步骤 7: 配置 DNS
+-----------------------
+# 在域名服务商添加 A 记录:
+yourdomain.com      A    服务器IP
+www.yourdomain.com  A    服务器IP
+api.yourdomain.com  A    服务器IP
+
+步骤 8: 申请 SSL 证书
+-----------------------
+# 使用 Let's Encrypt 免费证书
+sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
+sudo certbot --nginx -d api.yourdomain.com
+
+# 自动续期已配置,无需手动操作
+
+===============================================================
+
+🔧 Systemd 服务配置详情:
+
+服务文件: /etc/systemd/system/ai-humanizer-api.service
+
+[Unit]
+Description=AI Text Humanizer API
+After=network.target
+
+[Service]
+Type=notify
+User=root                              # 使用 root 用户
+Group=root                             # 使用 root 组
+WorkingDirectory=/root/home/yuyuan/studyx_human/web/backend
+Environment="PATH=/root/home/yuyuan/studyx_human/web/backend/venv/bin"
+EnvironmentFile=/root/home/yuyuan/studyx_human/web/backend/.env
+ExecStart=/root/home/yuyuan/studyx_human/web/backend/venv/bin/gunicorn \
+    app.main:app \
+    --workers 4 \
+    --worker-class uvicorn.workers.UvicornWorker \
+    --bind 0.0.0.0:18201 \
+    --timeout 120 \
+    --access-logfile /var/log/ai-humanizer/access.log \
+    --error-logfile /var/log/ai-humanizer/error.log
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+
+===============================================================
+
+🌐 Nginx 配置详情:
+
+配置文件: /etc/nginx/sites-available/ai-humanizer
+
+upstream backend_api {
+    server 127.0.0.1:18201;           # 后端端口
+}
+
+upstream frontend_web {
+    server 127.0.0.1:18200;           # 前端端口
+}
+
+server {
+    listen 80;
+    server_name yourdomain.com www.yourdomain.com;
+    
+    location / {
+        proxy_pass http://frontend_web;
+        # ... proxy headers
+    }
+}
+
+server {
+    listen 80;
+    server_name api.yourdomain.com;
+    
+    client_max_body_size 50M;         # 文件上传限制
+    
+    location / {
+        proxy_pass http://backend_api;
+        # ... proxy headers
+    }
+}
+
+===============================================================
+
+🛠️ 服务管理命令:
+
+后端服务 (Systemd):
+  sudo systemctl start ai-humanizer-api      # 启动
+  sudo systemctl stop ai-humanizer-api       # 停止
+  sudo systemctl restart ai-humanizer-api    # 重启
+  sudo systemctl status ai-humanizer-api     # 状态
+  sudo systemctl enable ai-humanizer-api     # 开机自启
+  sudo journalctl -u ai-humanizer-api -f     # 查看日志
+
+前端服务 (PM2):
+  pm2 start ai-humanizer-web                 # 启动
+  pm2 stop ai-humanizer-web                  # 停止
+  pm2 restart ai-humanizer-web               # 重启
+  pm2 status                                 # 状态
+  pm2 logs ai-humanizer-web                  # 查看日志
+  pm2 save                                   # 保存配置
+  pm2 startup                                # 开机自启
+
+Nginx:
+  sudo systemctl start nginx                 # 启动
+  sudo systemctl stop nginx                  # 停止
+  sudo systemctl restart nginx               # 重启
+  sudo systemctl status nginx                # 状态
+  sudo nginx -t                              # 测试配置
+
+===============================================================
+
+�� 测试和验证:
+
+1. 测试后端健康检查
+   curl http://localhost:18201/health
+   # 预期输出: {"status":"healthy","version":"1.0.0"}
+
+2. 测试前端
+   curl http://localhost:18200
+   # 预期输出: HTML 内容
+
+3. 测试通过域名访问
+   curl https://api.yourdomain.com/health
+   curl https://yourdomain.com
+
+4. 浏览器测试
+   https://yourdomain.com                    # 主站
+   https://api.yourdomain.com/docs           # API 文档
+
+5. 功能测试
+   - 输入文本 (300-5000 字符)
+   - 点击 "Humanize" 按钮
+   - 查看处理结果
+   - 上传文档测试
+   - 查看历史记录
+
+===============================================================
+
+📊 服务架构:
+
+Internet (用户)
+    ↓
+Nginx (80/443) ← SSL 终止
+    ├── yourdomain.com → Next.js (18200) [PM2]
+    └── api.yourdomain.com → FastAPI (18201) [Systemd]
+                                ↓
+                            OpenAI API
+
+内部通信:
+  前端 (18200) → 后端 (18201) → OpenAI API
+
+外部访问:
+  用户 → Nginx (443) → 前端/后端 (18200/18201)
+
+===============================================================
+
+📋 部署检查清单:
+
+环境准备:
+  [✅] Python 3.11 已安装
+  [✅] Node.js 18 已安装
+  [✅] pnpm 已安装
+  [✅] PM2 已安装
+  [✅] Nginx 已安装
+  [✅] Certbot 已安装
+  [✅] 防火墙已配置 (80, 443)
+
+项目上传:
+  [ ] 项目已上传到 /root/home/yuyuan/studyx_human
+  [ ] 目录权限正确 (root:root)
+
+后端配置:
+  [ ] .env 文件已创建
+  [ ] OPENAI_API_KEY 已配置
+  [ ] CORS_ORIGINS 已配置
+  [ ] 虚拟环境已创建
+  [ ] 依赖已安装
+  [ ] Systemd 服务已配置
+  [ ] 服务已启动 (systemctl status)
+  [ ] 健康检查通过 (curl localhost:18201/health)
+
+前端配置:
+  [ ] .env.production 已创建
+  [ ] NEXT_PUBLIC_API_URL 已配置
+  [ ] 依赖已安装
+  [ ] 生产版本已构建
+  [ ] PM2 已启动
+  [ ] 开机自启已配置
+  [ ] 前端可访问 (curl localhost:18200)
+
+Nginx 配置:
+  [ ] 配置文件已创建
+  [ ] 虚拟主机已启用
+  [ ] 配置测试通过 (nginx -t)
+  [ ] Nginx 已重启
+
+DNS 和 SSL:
+  [ ] DNS A 记录已添加
+  [ ] DNS 解析生效
+  [ ] SSL 证书已申请
+  [ ] HTTPS 可访问
+  [ ] HTTP 自动跳转 HTTPS
+
+最终测试:
+  [ ] API 健康检查通过
+  [ ] 主页可访问
+  [ ] 文本处理功能正常
+  [ ] 文件上传功能正常
+  [ ] 结果页显示正常
+  [ ] 历史记录功能正常
+
+===============================================================
+
+🐛 常见问题排查:
+
+1. 后端启动失败
+   → sudo journalctl -u ai-humanizer-api -n 100
+   → 检查 .env 配置
+   → 检查 Python 虚拟环境
+   → 检查端口占用: lsof -i :18201
+
+2. 前端无法访问
+   → pm2 logs ai-humanizer-web --lines 100
+   → 检查构建文件: ls -la .next/
+   → 检查端口: lsof -i :18200
+
+3. Nginx 502 错误
+   → sudo tail -f /var/log/nginx/error.log
+   → 检查后端/前端是否运行
+   → 检查端口配置
+
+4. 无法连接 OpenAI API
+   → 检查 API Key
+   → 测试网络: curl -I https://api.openai.com
+   → 确保代理为空 (服务器不需要代理)
+
+5. 权限错误
+   → 确认服务以 root 用户运行
+   → 检查目录权限: ls -la /root/home/yuyuan/
+   → 检查日志权限: ls -la /var/log/ai-humanizer/
+
+===============================================================
+
+📚 相关文档索引:
+
+- 完整部署指南: DEPLOY_TO_LINUX.md
+- 快速部署参考: QUICK_DEPLOY.txt
+- 部署总结: DEPLOYMENT_SUMMARY.txt
+- 端口配置说明: PORT_CHANGES_SUMMARY.txt
+- 路径更新说明: SERVER_PATH_UPDATE.txt
+- 最终配置总结: FINAL_DEPLOYMENT_CONFIG.txt (本文件)
+
+===============================================================
+
+✅ 配置完成!
+
+项目路径: /root/home/yuyuan/studyx_human
+前端端口: 18200
+后端端口: 18201
+运行用户: root
+
+准备好部署了! 🎉
+
+===============================================================

@@ -98,8 +98,8 @@ export function FileUpload({ onFileProcessed, disabled }: FileUploadProps) {
       const formData = new FormData();
       formData.append("file", file);
 
-      // Upload file to backend
-      const response = await fetch("http://localhost:18201/api/v1/upload", {
+      // Upload file to backend (使用全局 API_BASE_URL)
+      const response = await fetch(`${API_BASE_URL}/api/v1/upload`, {
         method: "POST",
         body: formData,
       });

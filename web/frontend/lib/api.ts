@@ -2,7 +2,10 @@
  * API client for backend communication
  */
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:18201";
+import { API_BASE_URL, getApiUrl } from './config';
+
+// 兼容导出,供其他文件使用
+export { API_BASE_URL };
 
 interface HumanizeRequest {
   source: {
@@ -40,7 +43,7 @@ interface HumanizeResponse {
 export async function humanizeText(
   request: HumanizeRequest
 ): Promise<HumanizeResponse> {
-  const response = await fetch(`${API_BASE_URL}/api/v1/humanize`, {
+  const response = await fetch(getApiUrl('HUMANIZE'), {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -62,7 +65,7 @@ export async function humanizeText(
 export async function humanizeFile(
   request: HumanizeFileRequest
 ): Promise<HumanizeResponse> {
-  const response = await fetch(`${API_BASE_URL}/api/v1/humanize-file`, {
+  const response = await fetch(getApiUrl('HUMANIZE_FILE'), {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -92,7 +95,7 @@ export async function uploadFile(file: File): Promise<{
   const formData = new FormData();
   formData.append("file", file);
 
-  const response = await fetch(`${API_BASE_URL}/api/v1/upload`, {
+  const response = await fetch(getApiUrl('UPLOAD'), {
     method: "POST",
     body: formData,
   });
