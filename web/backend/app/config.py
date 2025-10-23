@@ -7,7 +7,11 @@ class Settings(BaseSettings):
 
     app_name: str = "AI Text Humanizer API"
     app_version: str = "1.0.0"
-    cors_origins: list[str] = ["http://localhost:18200"]
+    cors_origins: list[str] = [
+        "http://localhost:18200",
+        "http://13.52.175.51:18200",
+        "http://13.52.175.51:18201",
+    ]
     log_level: str = "INFO"
     
     # OpenAI API Configuration
