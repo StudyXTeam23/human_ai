@@ -5,7 +5,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { humanizeSchema, type HumanizeFormData } from "@/schemas/humanize";
 import { humanizeText, humanizeFile } from "@/lib/api";
-import { addHistoryItem } from "@/lib/storage";
+import { addHistoryItem as addToHistoryStore } from "@/lib/storage";
+import { addHistoryItem } from "@/lib/history";
 import { useCharCount } from "@/hooks/useCharCount";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -115,8 +116,8 @@ export default function Home() {
 
       setResult(response.content);
 
-      // Save to history
-      addHistoryItem({
+      // Save to history store (旧的历史记录系统)
+      addToHistoryStore({
         preview: data.text.substring(0, 100),
         fullText: data.text,
         outputText: response.content,
@@ -129,12 +130,43 @@ export default function Home() {
         },
       });
 
+      // 保存到本地 JSON 历史记录 (新的历史记录系统)
+      try {
+        const historyItem = addHistoryItem({
+          originalText: data.text,
+          humanizedText: response.content,
+          processingTime: response.processingTime,
+          params: {
+            length: data.length,
+            similarity: data.similarity,
+            style: data.style,
+            customStyle: data.customStyle,
+          },
+          mode: data.mode,
+          fileName: data.mode === "document" ? fileName : undefined,
+        });
+
+        console.log("History saved:", historyItem?.id || "no-id");
+      } catch (historyError) {
+        console.error("Failed to save history:", historyError);
+      }
+
+      // 保存数据到 localStorage 用于结果页面显示
+      localStorage.setItem("originalText", data.text);
+      localStorage.setItem("humanizedText", response.content);
+      localStorage.setItem("processingTime", response.processingTime.toString());
+
       toast({
         title: "成功",
         description: inputMode === "document" 
           ? `文档 "${fileName}" 已成功处理`
           : "文本已成功人性化处理",
       });
+
+      // 跳转到结果页面
+      setTimeout(() => {
+        window.location.href = "/result";
+      }, 500);
     } catch (error) {
       toast({
         title: "错误",

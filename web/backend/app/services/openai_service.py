@@ -3,6 +3,7 @@ import httpx
 import logging
 import time
 import os
+import tiktoken
 from app.config import settings
 
 logger = logging.getLogger(__name__)
@@ -10,12 +11,65 @@ logger = logging.getLogger(__name__)
 
 class OpenAIService:
     """Service for interacting with OpenAI API via HTTP."""
+    
+    # Token limits for different models
+    MAX_CONTEXT_TOKENS = 128000  # gpt-4o and gpt-4o-mini max context
+    MAX_OUTPUT_TOKENS = 4000     # Reserve for output
+    MAX_INPUT_TOKENS = MAX_CONTEXT_TOKENS - MAX_OUTPUT_TOKENS - 1000  # Reserve 1000 for prompt and overhead
 
     def __init__(self):
         """Initialize OpenAI service."""
         self.api_key = settings.openai_api_key
         self.model = settings.openai_model
         self.api_url = settings.openai_api_url
+        
+        # Initialize tokenizer for the model
+        try:
+            self.encoding = tiktoken.encoding_for_model(self.model)
+        except KeyError:
+            # Fallback to cl100k_base encoding (used by gpt-4 and gpt-3.5-turbo)
+            logger.warning(f"Model {self.model} not found, using cl100k_base encoding")
+            self.encoding = tiktoken.get_encoding("cl100k_base")
+
+    def _count_tokens(self, text: str) -> int:
+        """Count the number of tokens in a text string."""
+        try:
+            return len(self.encoding.encode(text))
+        except Exception as e:
+            logger.error(f"Error counting tokens: {e}")
+            # Fallback: rough estimate (1 token ≈ 4 characters for English, 1-2 for Chinese)
+            return len(text) // 2
+
+    def _truncate_text(self, text: str, max_tokens: int) -> tuple[str, bool]:
+        """
+        Truncate text to fit within token limit.
+        
+        Returns:
+            tuple: (truncated_text, was_truncated)
+        """
+        try:
+            tokens = self.encoding.encode(text)
+            
+            if len(tokens) <= max_tokens:
+                return text, False
+            
+            # Truncate tokens
+            truncated_tokens = tokens[:max_tokens]
+            truncated_text = self.encoding.decode(truncated_tokens)
+            
+            logger.warning(
+                f"Text truncated from {len(tokens)} tokens to {max_tokens} tokens"
+            )
+            
+            return truncated_text, True
+            
+        except Exception as e:
+            logger.error(f"Error truncating text: {e}")
+            # Fallback: character-based truncation
+            char_limit = max_tokens * 2  # Rough estimate
+            if len(text) > char_limit:
+                return text[:char_limit], True
+            return text, False
 
     def _build_prompt(
         self,
@@ -108,6 +162,18 @@ class OpenAIService:
         start_time = time.time()
         
         try:
+            # Check and truncate text if necessary
+            text_tokens = self._count_tokens(text)
+            logger.info(f"Input text tokens: {text_tokens}")
+            
+            was_truncated = False
+            if text_tokens > self.MAX_INPUT_TOKENS:
+                text, was_truncated = self._truncate_text(text, self.MAX_INPUT_TOKENS)
+                logger.warning(
+                    f"Text was truncated to {self.MAX_INPUT_TOKENS} tokens "
+                    f"(original: {text_tokens} tokens)"
+                )
+            
             # If file_data is provided, use file-based message format
             if file_data:
                 # Build prompt for file mode
@@ -165,10 +231,7 @@ class OpenAIService:
                 payload = {
                     "model": self.model,
                     "messages": [
-                        {
-                            "role": "system",
-                            "content": "You are a professional text rewriting assistant that makes AI-generated text sound more natural and human-like.",
-                        },
+                        {"role": "system", "content": "You are a professional text rewriting assistant that makes AI-generated text sound more natural and human-like."},
                         {"role": "user", "content": prompt},
                     ],
                     "temperature": 0.7,
@@ -179,56 +242,53 @@ class OpenAIService:
                 "Content-Type": "application/json",
                 "Authorization": f"Bearer {self.api_key}",
             }
-
-            # Make HTTP request using httpx
-            # Use system proxy settings from environment (trust_env=True is default)
-            # This allows the use of HTTP_PROXY, HTTPS_PROXY, or system proxy settings
+            
+            # Log request details
+            prompt_tokens = self._count_tokens(prompt)
+            logger.info(f"Total prompt tokens: {prompt_tokens}")
+            
             async with httpx.AsyncClient(timeout=120.0) as client:
-                logger.info(f"Calling OpenAI API: {self.api_url}")
-                logger.debug(f"Request payload: model={payload['model']}, messages_count={len(payload['messages'])}, temperature={payload['temperature']}")
-                
-                response = await client.post(
-                    self.api_url, json=payload, headers=headers
-                )
-
-                logger.info(f"OpenAI API response status: {response.status_code}")
-                
-                if response.status_code != 200:
-                    logger.error(
-                        f"OpenAI API error: {response.status_code} - {response.text}"
-                    )
-                    raise ValueError(
-                        f"OpenAI API request failed with status {response.status_code}: {response.text}"
-                    )
-
+                response = await client.post(self.api_url, json=payload, headers=headers)
+                response.raise_for_status()
                 result = response.json()
-                logger.info(f"OpenAI API response received")
-
-                # Extract the rewritten text
-                if "choices" not in result or len(result["choices"]) == 0:
-                    raise ValueError("No response from OpenAI API")
-
                 rewritten_text = result["choices"][0]["message"]["content"].strip()
-                
-                # Calculate processing time
                 processing_time = int((time.time() - start_time) * 1000)
-
-                return {
+                
+                # Add truncation warning to result if text was truncated
+                response_data = {
                     "content": rewritten_text,
                     "chars": len(rewritten_text),
                     "processingTime": processing_time
                 }
-
+                
+                if was_truncated:
+                    truncation_notice = (
+                        "\n\n[注意: 原始文本过长已被截断。"
+                        f"原始约 {text_tokens:,} tokens，已截断至 {self.MAX_INPUT_TOKENS:,} tokens]"
+                    )
+                    response_data["content"] = rewritten_text + truncation_notice
+                    response_data["wasTruncated"] = True
+                    response_data["originalTokens"] = text_tokens
+                
+                return response_data
+                
         except httpx.TimeoutException as e:
             logger.error(f"OpenAI API request timeout: {e}")
             raise ValueError("Request timeout - please try again")
         except httpx.ConnectError as e:
             logger.error(f"OpenAI API connection error (check proxy settings): {e}")
             raise ValueError(f"Connection failed - please check network/proxy settings: {str(e)}")
+        except httpx.HTTPStatusError as e:
+            logger.error(f"OpenAI API HTTP error: {e.response.status_code} - {e.response.text}")
+            try:
+                error_detail = e.response.json()
+                error_msg = error_detail.get("error", {}).get("message", str(e))
+            except:
+                error_msg = e.response.text
+            raise ValueError(f"OpenAI API request failed with status {e.response.status_code}: {error_msg}")
         except httpx.RequestError as e:
             logger.error(f"OpenAI API request error: {e}", exc_info=True)
             raise ValueError(f"Request failed: {str(e)}")
         except Exception as e:
             logger.error(f"Unexpected error in OpenAI service: {e}", exc_info=True)
             raise ValueError(f"Failed to process text: {str(e)}")
-
