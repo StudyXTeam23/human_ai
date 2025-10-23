@@ -62,14 +62,14 @@ echo ""
 echo "📦 步骤 5: 测试后端..."
 echo "启动测试服务器 (Ctrl+C 停止)..."
 echo ""
-python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 &
+python -m uvicorn app.main:app --host 0.0.0.0 --port 18201 &
 UVICORN_PID=$!
 
 sleep 5
 
 # 测试健康检查
 echo "测试健康检查..."
-if curl -s http://localhost:8000/health | grep -q "healthy"; then
+if curl -s http://localhost:18201/health | grep -q "healthy"; then
     echo "✅ 后端测试成功!"
 else
     echo "❌ 后端测试失败"
@@ -137,7 +137,7 @@ echo "======================================================================"
 echo ""
 echo "📋 服务信息:"
 echo "  - 服务名称: ai-humanizer-api"
-echo "  - 监听端口: 8000"
+echo "  - 监听端口: 18201"
 echo "  - 工作目录: $PROJECT_DIR"
 echo "  - 日志目录: /var/log/ai-humanizer"
 echo ""
