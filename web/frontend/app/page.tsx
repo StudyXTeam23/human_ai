@@ -23,7 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
-import { Loader2, Copy, Download } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { FileUpload } from "@/components/FileUpload";
 import { FeaturesSection } from "@/components/FeaturesSection";
 import { HowItWorksSection } from "@/components/HowItWorksSection";
@@ -33,7 +33,6 @@ import { Footer } from "@/components/Footer";
 export default function Home() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const [result, setResult] = useState<string>("");
   const [inputMode, setInputMode] = useState<"text" | "document">("text");
   const [fileBase64, setFileBase64] = useState<string>("");
   const [fileName, setFileName] = useState<string>("");
@@ -82,7 +81,6 @@ export default function Home() {
     });
     
     setIsLoading(true);
-    setResult("");
 
     try {
       let response;
@@ -117,8 +115,6 @@ export default function Home() {
           },
         });
       }
-
-      setResult(response.content);
 
       // Save to history store (旧的历史记录系统)
       addToHistoryStore({
@@ -180,32 +176,6 @@ export default function Home() {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const copyToClipboard = async () => {
-    try {
-      await navigator.clipboard.writeText(result);
-      toast({
-        title: "已复制",
-        description: "内容已复制到剪贴板",
-      });
-    } catch {
-      toast({
-        title: "复制失败",
-        description: "无法复制到剪贴板",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const downloadTxt = () => {
-    const blob = new Blob([result], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `humanized_text_${new Date().toISOString().slice(0, 10)}.txt`;
-    a.click();
-    URL.revokeObjectURL(url);
   };
 
   return (
@@ -421,7 +391,6 @@ export default function Home() {
                   variant="outline"
                   onClick={() => {
                     setValue("text", "");
-                    setResult("");
                     setFileBase64("");
                     setFileName("");
                     setFilePath("");
@@ -433,35 +402,6 @@ export default function Home() {
             </form>
           </CardContent>
         </Card>
-
-        {/* Result */}
-        {result && (
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex justify-between items-center">
-                <span>Humanized Result</span>
-                <div className="flex gap-2">
-                  <Button size="sm" variant="outline" onClick={copyToClipboard}>
-                    <Copy className="h-4 w-4 mr-2" />
-                    Copy
-                  </Button>
-                  <Button size="sm" variant="outline" onClick={downloadTxt}>
-                    <Download className="h-4 w-4 mr-2" />
-                    Download
-                  </Button>
-                </div>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg">
-                <p className="whitespace-pre-wrap">{result}</p>
-              </div>
-              <p className="text-sm text-slate-500 mt-2">
-                {result.length} characters
-              </p>
-            </CardContent>
-          </Card>
-        )}
 
         {/* Use Cases */}
         <div className="mt-16 text-center">
