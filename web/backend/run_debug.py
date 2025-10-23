@@ -26,8 +26,8 @@ print(f"📍 工作目录: {backend_dir}")
 print(f"📍 Python 路径: {sys.executable}")
 print(f"📍 Python 版本: {sys.version.split()[0]}")
 print(f"🌐 代理设置: {os.environ.get('HTTPS_PROXY')}")
-print(f"🔗 访问地址: http://localhost:8000")
-print(f"📚 API 文档: http://localhost:8000/docs")
+print(f"🔗 访问地址: http://localhost:18201")
+print(f"📚 API 文档: http://localhost:18201/docs")
 print("=" * 70)
 print()
 
@@ -43,7 +43,7 @@ try:
     uvicorn.run(
         app,  # 直接传入 app 对象,而不是字符串
         host="0.0.0.0",
-        port=8000,
+        port=18201,
         reload=False,  # 调试模式下禁用 reload
         log_level="info"
     )

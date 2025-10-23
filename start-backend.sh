@@ -14,4 +14,4 @@ export HTTPS_PROXY=http://127.0.0.1:7890
 echo "✅ 使用 Python: $(which python)"
 echo "🌐 使用代理: $HTTPS_PROXY"
 echo "✅ 启动 FastAPI 服务器..."
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+uvicorn app.main:app --reload --host 0.0.0.0 --port 18201

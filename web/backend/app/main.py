@@ -67,15 +67,15 @@ if __name__ == "__main__":
     print(f"📍 工作目录: {backend_dir}")
     print(f"📍 应用: {settings.app_name} v{settings.app_version}")
     print(f"🌐 代理: {os.environ.get('HTTPS_PROXY')}")
-    print(f"🔗 访问: http://localhost:8000")
-    print(f"📚 文档: http://localhost:8000/docs")
+    print(f"🔗 访问: http://localhost:18201")
+    print(f"📚 文档: http://localhost:18201/docs")
     print()
     
     # 启动 uvicorn 服务器
     uvicorn.run(
         "app.main:app",
         host="0.0.0.0",
-        port=8000,
+        port=18201,
         reload=True,
         log_level="info"
     )

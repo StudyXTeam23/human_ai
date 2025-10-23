@@ -1,0 +1,211 @@
+===============================================================
+        �� Linux 服务器部署文档已创建
+===============================================================
+
+📚 已创建的文档和脚本:
+
+1. 📖 DEPLOY_TO_LINUX.md
+   - 完整详细的部署指南 (5000+ 行)
+   - 包含所有步骤和配置说明
+   - 故障排查和维护指南
+
+2. 📄 QUICK_DEPLOY.txt
+   - 快速部署速查表
+   - 核心命令和步骤
+   - 常见问题解决方案
+
+3. �� 自动化部署脚本:
+   deploy-scripts/
+   ├── setup-server.sh        # 服务器环境配置
+   ├── deploy-backend.sh      # 后端自动部署
+   ├── deploy-frontend.sh     # 前端自动部署
+   └── setup-nginx.sh         # Nginx 自动配置
+
+===============================================================
+
+🎯 快速开始 (3 步部署):
+
+步骤 1: 上传项目到服务器
+-----------------------
+# 从本地执行
+cd /Users/yuyuan/studyx_human
+tar -czf studyx.tar.gz --exclude='node_modules' --exclude='venv' .
+scp studyx.tar.gz root@your-server-ip:/var/www/
+
+# 在服务器解压
+ssh root@your-server-ip
+cd /var/www && tar -xzf studyx.tar.gz
+
+步骤 2: 运行自动部署脚本
+-----------------------
+cd /var/www/studyx_human
+
+# 配置环境 (首次)
+sudo bash deploy-scripts/setup-server.sh
+
+# 部署后端
+bash deploy-scripts/deploy-backend.sh
+
+# 部署前端
+bash deploy-scripts/deploy-frontend.sh
+
+# 配置 Nginx
+sudo bash deploy-scripts/setup-nginx.sh
+
+步骤 3: 配置 SSL 和 DNS
+-----------------------
+# DNS: 添加 A 记录指向服务器 IP
+# SSL: 运行 Certbot
+sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
+sudo certbot --nginx -d api.yourdomain.com
+
+===============================================================
+
+🔑 关键配置:
+
+后端 .env 文件:
+  路径: web/backend/.env
+  必填: OPENAI_API_KEY=sk-xxx...
+  必填: CORS_ORIGINS=https://yourdomain.com
+  注意: HTTP_PROXY 和 HTTPS_PROXY 留空 (服务器不需要代理)
+
+前端 .env.production:
+  路径: web/frontend/.env.production
+  必填: NEXT_PUBLIC_API_URL=https://api.yourdomain.com
+
+Nginx 配置:
+  主站: yourdomain.com → 前端 (端口 3000)
+  API: api.yourdomain.com → 后端 (端口 8000)
+
+===============================================================
+
+📊 服务架构:
+
+Internet
+    ↓
+Nginx (80/443) ← SSL 终止
+    ├── yourdomain.com → Next.js (3000) [PM2]
+    └── api.yourdomain.com → FastAPI (8000) [Systemd]
+                                ↓
+                            OpenAI API
+
+===============================================================
+
+🛠️ 服务管理命令:
+
+后端 (Systemd):
+  sudo systemctl status ai-humanizer-api
+  sudo systemctl restart ai-humanizer-api
+  sudo journalctl -u ai-humanizer-api -f
+
+前端 (PM2):
+  pm2 status
+  pm2 restart ai-humanizer-web
+  pm2 logs ai-humanizer-web
+
+Nginx:
+  sudo systemctl restart nginx
+  sudo nginx -t
+  sudo tail -f /var/log/nginx/error.log
+
+===============================================================
+
+✅ 部署检查清单:
+
+环境准备:
+  [ ] Python 3.11 已安装
+  [ ] Node.js 18 已安装
+  [ ] pnpm 已安装
+  [ ] PM2 已安装
+  [ ] Nginx 已安装
+  [ ] 防火墙已配置 (80, 443 端口开放)
+
+后端部署:
+  [ ] 虚拟环境已创建
+  [ ] 依赖已安装 (requirements-prod.txt)
+  [ ] .env 已配置 (OPENAI_API_KEY)
+  [ ] uploads 目录已创建
+  [ ] Systemd 服务已配置
+  [ ] 服务已启动并运行
+
+前端部署:
+  [ ] 依赖已安装 (pnpm install)
+  [ ] .env.production 已配置
+  [ ] 生产版本已构建 (pnpm build)
+  [ ] PM2 已启动应用
+  [ ] 开机自启已配置
+
+Nginx 配置:
+  [ ] 配置文件已创建
+  [ ] 虚拟主机已启用
+  [ ] 配置测试通过 (nginx -t)
+  [ ] 服务已重启
+
+DNS 和 SSL:
+  [ ] DNS A 记录已配置
+  [ ] SSL 证书已申请
+  [ ] HTTPS 可访问
+  [ ] HTTP 自动跳转 HTTPS
+
+测试验证:
+  [ ] API 健康检查: curl https://api.yourdomain.com/health
+  [ ] 前端可访问: https://yourdomain.com
+  [ ] 文本处理功能正常
+  [ ] 文件上传功能正常
+  [ ] 结果页显示正常
+
+===============================================================
+
+🐛 故障排查:
+
+1. 后端启动失败
+   → sudo journalctl -u ai-humanizer-api -n 100
+   → 检查 .env 配置
+   → 检查端口占用: sudo netstat -tulpn | grep 8000
+
+2. 前端无法访问
+   → pm2 logs ai-humanizer-web --lines 100
+   → 检查构建文件: ls -la web/frontend/.next
+   → 检查端口: sudo netstat -tulpn | grep 3000
+
+3. Nginx 502 错误
+   → sudo tail -f /var/log/nginx/error.log
+   → 检查后端/前端服务是否运行
+   → 检查 Nginx 配置: sudo nginx -t
+
+4. 无法连接 OpenAI
+   → 测试网络: curl -I https://api.openai.com
+   → 检查 API Key: cat web/backend/.env | grep OPENAI
+   → 检查代理设置 (应该为空)
+
+5. SSL 证书问题
+   → sudo certbot certificates
+   → sudo certbot renew --dry-run
+   → 检查 DNS 是否正确解析
+
+===============================================================
+
+📞 获取帮助:
+
+详细文档: DEPLOY_TO_LINUX.md
+快速指南: QUICK_DEPLOY.txt
+
+查看服务日志:
+  后端: sudo journalctl -u ai-humanizer-api -f
+  前端: pm2 logs ai-humanizer-web
+  Nginx: sudo tail -f /var/log/nginx/error.log
+
+===============================================================
+
+🎉 部署完成后:
+
+访问你的网站: https://yourdomain.com
+API 文档: https://api.yourdomain.com/docs
+
+监控和维护:
+  - 定期查看日志
+  - 监控磁盘空间 (uploads 目录)
+  - 定期备份配置文件
+  - 保持系统更新
+
+===============================================================
