@@ -6,7 +6,7 @@
 
 set -e
 
-PROJECT_DIR="/var/www/studyx_human/web/backend"
+PROJECT_DIR="/root/home/yuyuan/studyx_human/web/backend"
 
 echo "======================================================================"
 echo "         后端部署脚本"
@@ -89,8 +89,8 @@ After=network.target
 
 [Service]
 Type=notify
-User=www-data
-Group=www-data
+User=root
+Group=root
 WorkingDirectory=$PROJECT_DIR
 Environment="PATH=$PROJECT_DIR/venv/bin"
 EnvironmentFile=$PROJECT_DIR/.env
@@ -112,11 +112,11 @@ EOF
 echo ""
 echo "📦 步骤 7: 创建日志目录..."
 sudo mkdir -p /var/log/ai-humanizer
-sudo chown www-data:www-data /var/log/ai-humanizer
+sudo chown root:root /var/log/ai-humanizer
 
 echo ""
 echo "📦 步骤 8: 设置权限..."
-sudo chown -R www-data:www-data $PROJECT_DIR
+sudo chown -R root:root $PROJECT_DIR
 
 echo ""
 echo "📦 步骤 9: 启动服务..."

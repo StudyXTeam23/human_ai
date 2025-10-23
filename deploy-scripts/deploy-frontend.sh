@@ -6,7 +6,7 @@
 
 set -e
 
-PROJECT_DIR="/var/www/studyx_human/web/frontend"
+PROJECT_DIR="/root/home/yuyuan/studyx_human/web/frontend"
 
 echo "======================================================================"
 echo "         前端部署脚本"

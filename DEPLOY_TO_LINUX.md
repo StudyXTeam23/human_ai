@@ -166,7 +166,7 @@ rm studyx_human.tar.gz
 ```bash
 #!/bin/bash
 SERVER="root@your-server-ip"
-REMOTE_DIR="/var/www/studyx_human"
+REMOTE_DIR="/root/home/yuyuan/studyx_human"
 
 echo "🚀 开始部署到 $SERVER"
 
@@ -190,7 +190,7 @@ echo "✅ 文件上传完成"
 ### 1. 进入后端目录
 
 ```bash
-cd /var/www/studyx_human/web/backend
+cd /root/home/yuyuan/studyx_human/web/backend
 ```
 
 ### 2. 创建虚拟环境
@@ -281,12 +281,12 @@ After=network.target
 Type=notify
 User=www-data
 Group=www-data
-WorkingDirectory=/var/www/studyx_human/web/backend
-Environment="PATH=/var/www/studyx_human/web/backend/venv/bin"
-EnvironmentFile=/var/www/studyx_human/web/backend/.env
+WorkingDirectory=/root/home/yuyuan/studyx_human/web/backend
+Environment="PATH=/root/home/yuyuan/studyx_human/web/backend/venv/bin"
+EnvironmentFile=/root/home/yuyuan/studyx_human/web/backend/.env
 
 # 使用 Gunicorn 启动 (生产环境推荐)
-ExecStart=/var/www/studyx_human/web/backend/venv/bin/gunicorn \
+ExecStart=/root/home/yuyuan/studyx_human/web/backend/venv/bin/gunicorn \
     app.main:app \
     --workers 4 \
     --worker-class uvicorn.workers.UvicornWorker \
@@ -310,7 +310,7 @@ sudo mkdir -p /var/log/ai-humanizer
 sudo chown www-data:www-data /var/log/ai-humanizer
 
 # 设置项目权限
-sudo chown -R www-data:www-data /var/www/studyx_human/web/backend
+sudo chown -R www-data:www-data /root/home/yuyuan/studyx_human/web/backend
 ```
 
 ### 9. 启动后端服务
@@ -339,7 +339,7 @@ sudo journalctl -u ai-humanizer-api -f
 ### 1. 进入前端目录
 
 ```bash
-cd /var/www/studyx_human/web/frontend
+cd /root/home/yuyuan/studyx_human/web/frontend
 ```
 
 ### 2. 配置生产环境变量
@@ -598,7 +598,7 @@ sudo journalctl -u ai-humanizer-api -n 100 --no-pager
 sudo netstat -tulpn | grep 8000
 
 # 检查 Python 环境
-cd /var/www/studyx_human/web/backend
+cd /root/home/yuyuan/studyx_human/web/backend
 source venv/bin/activate
 python -c "import fastapi; print('FastAPI OK')"
 ```
@@ -613,7 +613,7 @@ pm2 logs ai-humanizer-web --lines 100
 sudo netstat -tulpn | grep 3000
 
 # 检查构建文件
-ls -la /var/www/studyx_human/web/frontend/.next
+ls -la /root/home/yuyuan/studyx_human/web/frontend/.next
 ```
 
 ### 3. Nginx 错误
@@ -638,7 +638,7 @@ sudo ufw allow 443/tcp
 curl -I https://api.openai.com
 
 # 检查环境变量
-cat /var/www/studyx_human/web/backend/.env | grep OPENAI
+cat /root/home/yuyuan/studyx_human/web/backend/.env | grep OPENAI
 
 # 测试 API
 curl -X POST http://localhost:8000/api/v1/humanize \
@@ -650,9 +650,9 @@ curl -X POST http://localhost:8000/api/v1/humanize \
 
 ```bash
 # 修复权限
-sudo chown -R www-data:www-data /var/www/studyx_human/web/backend
-sudo chmod -R 755 /var/www/studyx_human/web/backend
-sudo chmod -R 755 /var/www/studyx_human/web/backend/uploads
+sudo chown -R www-data:www-data /root/home/yuyuan/studyx_human/web/backend
+sudo chmod -R 755 /root/home/yuyuan/studyx_human/web/backend
+sudo chmod -R 755 /root/home/yuyuan/studyx_human/web/backend/uploads
 ```
 
 ---
@@ -662,7 +662,7 @@ sudo chmod -R 755 /var/www/studyx_human/web/backend/uploads
 ### 更新代码
 
 ```bash
-cd /var/www/studyx_human
+cd /root/home/yuyuan/studyx_human
 
 # Git 方式
 git pull origin main
@@ -688,11 +688,11 @@ pm2 restart ai-humanizer-web
 ```bash
 # 备份数据库配置
 sudo tar -czf backup-$(date +%Y%m%d).tar.gz \
-  /var/www/studyx_human/web/backend/.env \
-  /var/www/studyx_human/web/backend/uploads
+  /root/home/yuyuan/studyx_human/web/backend/.env \
+  /root/home/yuyuan/studyx_human/web/backend/uploads
 
 # 定期备份脚本
-echo "0 2 * * * tar -czf /backup/ai-humanizer-\$(date +\%Y\%m\%d).tar.gz /var/www/studyx_human/web/backend/uploads" | crontab -
+echo "0 2 * * * tar -czf /backup/ai-humanizer-\$(date +\%Y\%m\%d).tar.gz /root/home/yuyuan/studyx_human/web/backend/uploads" | crontab -
 ```
 
 ---

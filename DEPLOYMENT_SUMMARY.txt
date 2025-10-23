@@ -38,7 +38,7 @@ cd /var/www && tar -xzf studyx.tar.gz
 
 步骤 2: 运行自动部署脚本
 -----------------------
-cd /var/www/studyx_human
+cd /root/home/yuyuan/studyx_human
 
 # 配置环境 (首次)
 sudo bash deploy-scripts/setup-server.sh

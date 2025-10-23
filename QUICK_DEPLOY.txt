@@ -46,7 +46,7 @@ git clone https://github.com/yourusername/studyx_human.git
 
 步骤 3: 运行自动部署脚本
 -----------------------
-cd /var/www/studyx_human
+cd /root/home/yuyuan/studyx_human
 
 # 3.1 配置服务器环境 (首次部署)
 sudo bash deploy-scripts/setup-server.sh
@@ -110,15 +110,15 @@ Nginx:
 📂 重要文件路径:
 
 项目目录:
-  /var/www/studyx_human/
+  /root/home/yuyuan/studyx_human/
 
 后端:
-  配置文件: /var/www/studyx_human/web/backend/.env
+  配置文件: /root/home/yuyuan/studyx_human/web/backend/.env
   日志文件: /var/log/ai-humanizer/
   服务文件: /etc/systemd/system/ai-humanizer-api.service
 
 前端:
-  配置文件: /var/www/studyx_human/web/frontend/.env.production
+  配置文件: /root/home/yuyuan/studyx_human/web/frontend/.env.production
   
 Nginx:
   配置文件: /etc/nginx/sites-available/ai-humanizer
@@ -140,14 +140,14 @@ Nginx:
 
 4. 无法连接 OpenAI API?
    # 检查 .env 配置
-   cat /var/www/studyx_human/web/backend/.env | grep OPENAI
+   cat /root/home/yuyuan/studyx_human/web/backend/.env | grep OPENAI
    
    # 测试网络
    curl -I https://api.openai.com
 
 5. 权限问题?
-   sudo chown -R www-data:www-data /var/www/studyx_human/web/backend
-   sudo chmod -R 755 /var/www/studyx_human/web/backend
+   sudo chown -R www-data:www-data /root/home/yuyuan/studyx_human/web/backend
+   sudo chmod -R 755 /root/home/yuyuan/studyx_human/web/backend
 
 ===============================================================
 

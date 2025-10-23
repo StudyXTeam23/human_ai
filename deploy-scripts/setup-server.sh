@@ -70,8 +70,8 @@ ufw status
 
 echo ""
 echo "📦 步骤 10: 创建项目目录..."
-mkdir -p /var/www
-chown -R $SUDO_USER:$SUDO_USER /var/www
+mkdir -p /root/home/yuyuan
+chown -R root:root /root/home/yuyuan
 
 echo ""
 echo "======================================================================"
@@ -85,10 +85,10 @@ echo "  - pnpm: $(pnpm -v)"
 echo "  - PM2: $(pm2 -v)"
 echo "  - Nginx: $(nginx -v 2>&1)"
 echo ""
-echo "📁 项目目录: /var/www"
+echo "📁 项目目录: /root/home/yuyuan"
 echo ""
 echo "🎯 下一步:"
-echo "  1. 上传项目代码到 /var/www/studyx_human"
+echo "  1. 上传项目代码到 /root/home/yuyuan/studyx_human"
 echo "  2. 配置后端 .env 文件"
 echo "  3. 配置前端 .env.production 文件"
 echo "  4. 运行部署脚本: bash deploy-scripts/deploy-backend.sh"
