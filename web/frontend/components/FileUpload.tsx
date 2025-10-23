@@ -4,6 +4,7 @@ import { useState, useRef, DragEvent } from "react";
 import { Upload, File, X, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { API_BASE_URL } from "@/lib/api";
 
 interface FileUploadProps {
   onFileProcessed: (text: string, base64: string, filename: string, filepath?: string) => void;
