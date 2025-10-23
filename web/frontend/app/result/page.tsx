@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowLeft, Copy, Download, Check, History } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-export default function ResultPage() {
+function ResultContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const { toast } = useToast();
@@ -51,7 +51,7 @@ export default function ResultPage() {
         description: "无法复制到剪贴板",
         variant: "destructive",
       });
-    }
+    } // 移除未使用的 catch 参数
   };
 
   const handleDownload = () => {
@@ -191,3 +191,18 @@ export default function ResultPage() {
   );
 }
 
+// 使用 Suspense 包裹组件以支持 useSearchParams
+export default function ResultPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-lg text-slate-600 dark:text-slate-400">加载结果中...</p>
+        </div>
+      </div>
+    }>
+      <ResultContent />
+    </Suspense>
+  );
+}

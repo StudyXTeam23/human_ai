@@ -10,7 +10,7 @@ import { addHistoryItem } from "@/lib/history";
 import { useCharCount } from "@/hooks/useCharCount";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Select,
@@ -34,7 +34,6 @@ export default function Home() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [inputMode, setInputMode] = useState<"text" | "document">("text");
-  const [fileBase64, setFileBase64] = useState<string>("");
   const [fileName, setFileName] = useState<string>("");
   const [filePath, setFilePath] = useState<string>("");
 
@@ -59,11 +58,10 @@ export default function Home() {
   const style = watch("style");
   const { count, isTooShort, isTooLong } = useCharCount(text);
 
-  const handleFileProcessed = (text: string, base64: string, filename: string, filepath?: string) => {
+  const handleFileProcessed = (text: string, _base64: string, filename: string, filepath?: string) => {
     console.log("File processed:", { textLength: text.length, filename, filepath });
     setValue("text", text);
     setValue("mode", "document");
-    setFileBase64(base64);
     setFileName(filename);
     if (filepath) {
       setFilePath(filepath);
@@ -391,7 +389,6 @@ export default function Home() {
                   variant="outline"
                   onClick={() => {
                     setValue("text", "");
-                    setFileBase64("");
                     setFileName("");
                     setFilePath("");
                   }}

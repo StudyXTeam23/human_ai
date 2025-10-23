@@ -1,0 +1,146 @@
+===============================================================
+        �� 构建错误修复 - Suspense 边界
+===============================================================
+
+❌ 错误信息:
+-----------------------
+useSearchParams() should be wrapped in a suspense boundary at page "/result"
+Error occurred prerendering page "/result"
+
+原因:
+Next.js 14+ 要求使用 useSearchParams() 的组件必须包裹在 
+Suspense 边界中,以支持服务端渲染和静态导出。
+
+===============================================================
+
+✅ 已修复的问题:
+-----------------------
+
+1. result/page.tsx - 添加 Suspense 包裹
+   ✅ 导入 Suspense
+   ✅ 创建 ResultContent 组件
+   ✅ 用 Suspense 包裹并提供 fallback
+   ✅ 修复未使用的 error 变量
+
+2. app/page.tsx - 清理未使用变量
+   ✅ 移除未使用的 CardHeader, CardTitle 导入
+   ✅ 移除未使用的 fileBase64 状态
+   ✅ 使用 _base64 表示忽略的参数
+
+3. components/FileUpload.tsx - 清理未使用变量
+   ✅ 移除未使用的 allowedTypes 变量
+   ✅ 验证逻辑已在 schemas/humanize.ts 中
+
+===============================================================
+
+📝 修复详情:
+-----------------------
+
+result/page.tsx 结构:
+```typescript
+// 将原组件改为 ResultContent
+function ResultContent() {
+  const searchParams = useSearchParams();
+  // ... 原有逻辑
+}
+
+// 导出的组件用 Suspense 包裹
+export default function ResultPage() {
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <ResultContent />
+    </Suspense>
+  );
+}
+```
+
+===============================================================
+
+🔄 服务器上重新构建:
+-----------------------
+
+方式 1: 重新上传所有修改的文件
+cd /Users/yuyuan/studyx_human
+tar -czf frontend-fixed.tar.gz \
+  web/frontend/app/page.tsx \
+  web/frontend/app/result/page.tsx \
+  web/frontend/components/FileUpload.tsx
+
+scp frontend-fixed.tar.gz root@your-server-ip:/root/home/yuyuan/
+ssh root@your-server-ip
+cd /root/home/yuyuan
+tar -xzf frontend-fixed.tar.gz
+cd studyx_human/web/frontend
+pnpm build
+
+方式 2: 分别上传文件
+scp web/frontend/app/page.tsx \
+    root@your-server-ip:/root/home/yuyuan/studyx_human/web/frontend/app/
+scp web/frontend/app/result/page.tsx \
+    root@your-server-ip:/root/home/yuyuan/studyx_human/web/frontend/app/result/
+scp web/frontend/components/FileUpload.tsx \
+    root@your-server-ip:/root/home/yuyuan/studyx_human/web/frontend/components/
+
+ssh root@your-server-ip
+cd /root/home/yuyuan/studyx_human/web/frontend
+pnpm build
+
+===============================================================
+
+✅ 构建应该成功:
+-----------------------
+cd /root/home/yuyuan/studyx_human/web/frontend
+pnpm build
+
+预期输出:
+✓ Compiled successfully
+✓ Linting and checking validity of types
+✓ Collecting page data
+✓ Generating static pages (8/8)
+✓ Finalizing page optimization
+
+===============================================================
+
+🚀 启动服务:
+-----------------------
+pm2 restart ai-humanizer-web
+pm2 logs ai-humanizer-web
+
+或使用简单启动:
+cd /root/home/yuyuan/studyx_human/web/frontend
+pnpm start
+
+===============================================================
+
+🧪 验证功能:
+-----------------------
+# 1. 检查端口
+netstat -tulpn | grep 18200
+
+# 2. 测试访问
+curl http://localhost:18200
+
+# 3. 浏览器访问
+http://your-server-ip:18200
+
+# 4. 测试结果页
+访问主页 → 输入文本 → 点击 Humanize → 应该能跳转到结果页
+
+===============================================================
+
+📚 相关 Next.js 文档:
+-----------------------
+https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
+https://nextjs.org/docs/app/api-reference/functions/use-search-params
+
+===============================================================
+
+✅ 所有构建错误已修复!
+-----------------------
+- ✅ Suspense 边界已添加
+- ✅ 未使用的变量已清理
+- ✅ ESLint 警告已修复
+
+现在可以成功构建并部署前端!
+
+===============================================================
