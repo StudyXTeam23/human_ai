@@ -25,6 +25,10 @@ import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import { Loader2, Copy, Download } from "lucide-react";
 import { FileUpload } from "@/components/FileUpload";
+import { FeaturesSection } from "@/components/FeaturesSection";
+import { HowItWorksSection } from "@/components/HowItWorksSection";
+import { FAQSection } from "@/components/FAQSection";
+import { Footer } from "@/components/Footer";
 
 export default function Home() {
   const { toast } = useToast();
@@ -205,17 +209,53 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-background-light dark:bg-background-dark">
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-2">
-            Free AI Humanizer – 100% Human-Written Quality
-          </h1>
-          <p className="text-slate-600 dark:text-slate-400">
-            AI Humanizer quickly converts your content into natural, human-like content
-          </p>
-        </div>
+    <>
+      <main className="min-h-screen bg-background-light dark:bg-background-dark">
+        <div className="container mx-auto px-4 py-12 max-w-6xl">
+          {/* Hero Section */}
+          <div className="text-center mb-12">
+            <div className="inline-block mb-4">
+              <span className="px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white text-sm font-semibold">
+                🎉 100% Free Forever • No Sign-up Required
+              </span>
+            </div>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-6 leading-tight">
+              Free AI Humanizer –<br />
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+                100% Human-Written Quality
+              </span>
+            </h1>
+            <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto mb-8">
+              Transform AI-generated text into natural, human-like content instantly. 
+              Bypass AI detection, improve readability, and make your content authentic.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4 text-sm text-slate-600 dark:text-slate-400">
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                No Sign-up
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                Unlimited Usage
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                Lightning Fast
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                Bypass AI Detection
+              </div>
+            </div>
+          </div>
 
         {/* Main Form */}
         <Card className="mb-8">
@@ -423,15 +463,36 @@ export default function Home() {
           </Card>
         )}
 
-        {/* Footer */}
-        <div className="text-center mt-12 text-sm text-slate-500">
-          <p>
-            免责声明: 本工具仅用于演示目的。请合法、合规使用,遵守学术诚信和职业道德。
-          </p>
+        {/* Use Cases */}
+        <div className="mt-16 text-center">
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-8">
+            Perfect For
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="p-4 rounded-lg bg-slate-100 dark:bg-slate-800">
+              <p className="font-semibold text-slate-900 dark:text-white">📝 Content Writers</p>
+            </div>
+            <div className="p-4 rounded-lg bg-slate-100 dark:bg-slate-800">
+              <p className="font-semibold text-slate-900 dark:text-white">🎓 Students</p>
+            </div>
+            <div className="p-4 rounded-lg bg-slate-100 dark:bg-slate-800">
+              <p className="font-semibold text-slate-900 dark:text-white">💼 Marketers</p>
+            </div>
+            <div className="p-4 rounded-lg bg-slate-100 dark:bg-slate-800">
+              <p className="font-semibold text-slate-900 dark:text-white">✍️ Bloggers</p>
+            </div>
+          </div>
         </div>
       </div>
-
+      
       <Toaster />
     </main>
+    
+    {/* Import sections */}
+    <FeaturesSection />
+    <HowItWorksSection />
+    <FAQSection />
+    <Footer />
+    </>
   );
 }
