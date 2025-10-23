@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Text Editor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#137fec",
+            "background-light": "#f6f7f8",
+            "background-dark": "#101922",
+          },
+          fontFamily: {
+            "display": ["Inter"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-700 px-10 py-3">
+<div class="flex items-center gap-4 text-slate-900 dark:text-slate-50">
+<div class="w-8 h-8">
+<svg class="text-primary" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 42.4379C4 42.4379 14.0962 36.0744 24 41.1692C35.0664 46.8624 44 42.2078 44 42.2078L44 7.01134C44 7.01134 35.068 11.6577 24.0031 5.96913C14.0971 0.876274 4 7.27094 4 7.27094L4 42.4379Z" fill="currentColor"></path>
+</svg>
+</div>
+<h1 class="text-xl font-bold leading-tight tracking-tighter">AI Text Editor</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-slate-50 text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Sign Up</span>
+</button>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-slate-200 text-slate-900 dark:bg-slate-700 dark:text-slate-50 text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Log In</span>
+</button>
+</div>
+</header>
+<main class="flex-1 px-4 sm:px-6 lg:px-10 py-8">
+<div class="max-w-7xl mx-auto">
+<div class="pb-3">
+<div class="flex border-b border-slate-200 dark:border-slate-700 px-4 gap-8">
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-primary text-slate-900 dark:text-slate-50 pb-[13px] pt-4" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">Text</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-slate-500 dark:text-slate-400 pb-[13px] pt-4 hover:border-primary/50" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">Document</p>
+</a>
+</div>
+</div>
+<div class="flex gap-3 p-3 flex-wrap pr-4 items-center border-b border-slate-200 dark:border-slate-700 mb-6">
+<button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-slate-200 dark:bg-slate-700 pl-4 pr-2">
+<p class="text-slate-900 dark:text-slate-50 text-sm font-medium leading-normal">Length: Normal</p>
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-50 text-xl">arrow_drop_down</span>
+</button>
+<button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-slate-200 dark:bg-slate-700 pl-4 pr-2">
+<p class="text-slate-900 dark:text-slate-50 text-sm font-medium leading-normal">Similarity: Moderate</p>
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-50 text-xl">arrow_drop_down</span>
+</button>
+<button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-slate-200 dark:bg-slate-700 pl-4 pr-2">
+<p class="text-slate-900 dark:text-slate-50 text-sm font-medium leading-normal">Style: Neutral</p>
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-50 text-xl">arrow_drop_down</span>
+</button>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm">
+<label class="flex flex-col h-full">
+<p class="text-slate-800 dark:text-slate-200 text-lg font-semibold leading-normal pb-3">Humanized Text</p>
+<textarea class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-800 dark:text-slate-200 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-slate-300 dark:border-slate-600 bg-background-light dark:bg-background-dark min-h-[300px] placeholder:text-slate-400 dark:placeholder-slate-500 p-4 text-base font-normal leading-relaxed" placeholder="Enter text to humanize...">The gentle patter of rain against the windowpane creates a soothing rhythm, a natural melody that quiets the bustling world outside. Inside, curled up by the fireplace with a good book, the warmth of the flames dances in stark, beautiful contrast to the cool, grey day. It's a moment of pure calmness, a simple pleasure that feels like a deep, restorative breath for the soul.</textarea>
+</label>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal pt-3 px-1">489 / 5000 characters (92 words)</p>
+</div>
+<div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm">
+<label class="flex flex-col h-full">
+<p class="text-slate-800 dark:text-slate-200 text-lg font-semibold leading-normal pb-3">Original AI Text</p>
+<textarea class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-800 dark:text-slate-200 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-slate-300 dark:border-slate-600 bg-background-light dark:bg-background-dark min-h-[300px] placeholder:text-slate-400 dark:placeholder-slate-500 p-4 text-base font-normal leading-relaxed" placeholder="Paste AI-generated text here...">Rain is a form of precipitation where water droplets fall from the atmosphere to the Earth's surface. This meteorological phenomenon occurs when water vapor in the air condenses and becomes heavy enough to fall. Proximity to a heat source such as a fire can induce feelings of comfort, particularly during colder atmospheric conditions. This scenario is often associated with feelings of relaxation and tranquility.</textarea>
+</label>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal pt-3 px-1">489 / 5000 characters (92 words)</p>
+</div>
+</div>
+<div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+<button class="flex w-full sm:w-auto min-w-[200px] max-w-[480px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-12 px-6 bg-primary text-slate-50 text-base font-bold leading-normal tracking-wide shadow-md hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined">person</span>
+<span class="truncate">Humanize AI Text</span>
+</button>
+<button class="flex w-full sm:w-auto min-w-[200px] max-w-[480px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-12 px-6 bg-slate-200 text-slate-900 dark:bg-slate-700 dark:text-slate-50 text-base font-bold leading-normal tracking-wide shadow-md hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors">
+<span class="material-symbols-outlined">memory</span>
+<span class="truncate">Detect AI</span>
+</button>
+</div>
+<div class="mt-6 flex items-center justify-center gap-6">
+<button class="flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary/90 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+<span class="text-sm font-medium">Clear</span>
+</button>
+<div class="h-6 border-l border-slate-300 dark:border-slate-600"></div>
+<button class="flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary/90 transition-colors">
+<span class="material-symbols-outlined">download</span>
+<span class="text-sm font-medium">Download</span>
+</button>
+<div class="h-6 border-l border-slate-300 dark:border-slate-600"></div>
+<button class="flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary/90 transition-colors">
+<span class="material-symbols-outlined">content_copy</span>
+<span class="text-sm font-medium">Copy</span>
+</button>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

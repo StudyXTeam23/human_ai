@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Writing Humanizer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#212529] dark:text-white">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<div class="px-4 md:px-10 lg:px-40 flex flex-1 justify-center py-5">
+<div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+<div class="flex flex-wrap justify-center text-center gap-3 p-4">
+<div class="flex w-full flex-col gap-3">
+<p class="text-[#0d141b] dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Free AI Humanizer – 100% Human-Written Quality</p>
+<p class="text-[#4c739a] dark:text-gray-400 text-base font-normal leading-normal">AI Humanizer quickly converts your content into natural, human-like content, effortlessly bypassing detection tools.</p>
+</div>
+</div>
+<div class="bg-white dark:bg-background-dark rounded-xl shadow-lg p-6 mt-8">
+<div class="flex px-4 py-3">
+<div class="flex h-10 flex-1 items-center justify-center rounded-lg bg-[#e7edf3] dark:bg-gray-800 p-1">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-primary has-[:checked]:text-white text-[#4c739a] dark:text-gray-400 has-[:checked]:dark:text-white text-sm font-medium leading-normal transition-colors duration-200">
+<span class="truncate">Text</span>
+<input checked="" class="invisible w-0" name="input-mode" type="radio" value="Text"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-primary has-[:checked]:text-white text-[#4c739a] dark:text-gray-400 has-[:checked]:dark:text-white text-sm font-medium leading-normal transition-colors duration-200">
+<span class="truncate">Document</span>
+<input class="invisible w-0" name="input-mode" type="radio" value="Document"/>
+</label>
+</div>
+</div>
+<div class="px-4 py-3">
+<label class="flex flex-col min-w-40 flex-1">
+<textarea class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-gray-200 focus:outline-0 focus:ring-2 focus:ring-primary/50 border-none bg-[#f8f9fa] dark:bg-gray-800 min-h-[200px] placeholder:text-[#4c739a] dark:placeholder:text-gray-500 p-4 text-base font-normal leading-normal">The rain tapped gently against the window pane, a soothing rhythm that calmed my restless soul. Curled up by the fireplace with a good book, I felt a profound sense of peace wash over me. The world outside could wait.</textarea>
+</label>
+</div>
+<div class="flex flex-wrap items-center justify-between gap-4 px-4 py-3">
+<div class="flex items-center gap-4">
+<div class="relative">
+<select class="form-select appearance-none w-full rounded-lg bg-[#f8f9fa] dark:bg-gray-800 border-none text-[#4c739a] dark:text-gray-400 text-sm font-normal py-2 pl-4 pr-10 focus:ring-2 focus:ring-primary/50">
+<option>Length: Normal</option>
+<option>Length: Short</option>
+<option>Length: Long</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[#4c739a] dark:text-gray-400 pointer-events-none">expand_more</span>
+</div>
+<div class="relative">
+<select class="form-select appearance-none w-full rounded-lg bg-[#f8f9fa] dark:bg-gray-800 border-none text-[#4c739a] dark:text-gray-400 text-sm font-normal py-2 pl-4 pr-10 focus:ring-2 focus:ring-primary/50">
+<option>Similarity: Moderate</option>
+<option>Similarity: Low</option>
+<option>Similarity: High</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[#4c739a] dark:text-gray-400 pointer-events-none">expand_more</span>
+</div>
+<div class="relative">
+<select class="form-select appearance-none w-full rounded-lg bg-[#f8f9fa] dark:bg-gray-800 border-none text-[#4c739a] dark:text-gray-400 text-sm font-normal py-2 pl-4 pr-10 focus:ring-2 focus:ring-primary/50">
+<option>Style: Neutral</option>
+<option>Style: Formal</option>
+<option>Style: Casual</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[#4c739a] dark:text-gray-400 pointer-events-none">expand_more</span>
+</div>
+</div>
+<p class="text-[#4c739a] dark:text-gray-400 text-sm font-normal leading-normal">217/5000</p>
+</div>
+<div class="px-4 py-5">
+<button class="w-full bg-primary text-white font-bold py-3 px-6 rounded-lg text-lg hover:bg-primary/90 transition-colors duration-200">
+                                Humanize 3%
+                            </button>
+</div>
+</div>
+<div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="bg-white dark:bg-gray-800/50 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-200">
+<h3 class="text-base font-semibold text-[#0d141b] dark:text-white">[Example] The rain tapped gently against the window...</h3>
+<p class="text-sm text-[#4c739a] dark:text-gray-400 mt-2">09/22/2025</p>
+</div>
+<div class="bg-white dark:bg-gray-800/50 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-200">
+<h3 class="text-base font-semibold text-[#0d141b] dark:text-white">[Example] Lost in a book, the world outside faded away...</h3>
+<p class="text-sm text-[#4c739a] dark:text-gray-400 mt-2">09/21/2025</p>
+</div>
+<div class="bg-white dark:bg-gray-800/50 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-200">
+<h3 class="text-base font-semibold text-[#0d141b] dark:text-white">[Example] A cup of tea and the warmth of the fire...</h3>
+<p class="text-sm text-[#4c739a] dark:text-gray-400 mt-2">09/20/2025</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

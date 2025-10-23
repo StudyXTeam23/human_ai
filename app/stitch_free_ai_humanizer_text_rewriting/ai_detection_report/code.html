@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Detector Report</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-800 dark:text-slate-200">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<div class="px-4 py-5 sm:px-6 md:px-10 lg:px-20 xl:px-40 flex flex-1 justify-center">
+<div class="layout-content-container flex flex-col lg:flex-row gap-8 max-w-7xl flex-1">
+<div class="flex-1 lg:w-3/5 bg-white dark:bg-background-dark rounded-xl shadow-sm p-6 md:p-8">
+<div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+<p class="text-[#0d141b] dark:text-slate-200 text-base font-normal leading-relaxed">
+                                The rain began as a soft, rhythmic patter on the windowpane, a gentle drumming that seemed to echo the quiet beating of my own heart. Outside, the world was a wash of muted grays and deep greens, the leaves of the old oak tree glistening with a fresh, silvery sheen. A sense of calm descended with the rain, a peaceful stillness that settled over the house and wrapped me in a comforting embrace. It was a day for quiet contemplation, for a warm cup of tea and a good book, a day to simply be.
+                            </p>
+</div>
+</div>
+<div class="flex-1 lg:w-2/5 bg-white dark:bg-background-dark rounded-xl shadow-sm p-6 md:p-8 flex flex-col">
+<div class="layout-content-container flex flex-col flex-1">
+<h2 class="text-[#0d141b] dark:text-slate-100 text-[22px] font-bold leading-tight tracking-[-0.015em] pb-4">AI Detector Report</h2>
+<div class="flex flex-col items-center justify-center py-6">
+<h1 class="text-[#0d141b] dark:text-slate-100 tracking-light text-6xl font-bold leading-tight">0%</h1>
+<p class="text-[#4c739a] dark:text-slate-400 text-sm font-normal leading-normal pt-2">Probability AI-Generated</p>
+</div>
+<div class="flex flex-col gap-5 py-4">
+<div class="flex flex-col gap-2">
+<div class="flex gap-4 justify-between items-center">
+<p class="text-[#0d141b] dark:text-slate-200 text-sm font-medium leading-normal">Possible AI-generated text</p>
+<p class="text-[#0d141b] dark:text-slate-300 text-sm font-normal leading-normal">0%</p>
+</div>
+<div class="rounded-full bg-slate-200 dark:bg-slate-700 h-2">
+<div class="h-2 rounded-full bg-[#FFC0CB]" style="width: 0%;"></div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex gap-4 justify-between items-center">
+<p class="text-[#0d141b] dark:text-slate-200 text-sm font-medium leading-normal">Possible Human-written text</p>
+<p class="text-[#0d141b] dark:text-slate-300 text-sm font-normal leading-normal">100%</p>
+</div>
+<div class="rounded-full bg-slate-200 dark:bg-slate-700 h-2">
+<div class="h-2 rounded-full bg-primary" style="width: 100%;"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-center py-6">
+<img alt="NoteGPT Logo" class="h-8 w-auto" data-alt="NoteGPT Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKjaG0xmbKrZbi8T7QbRBiZH4HGSK8qplcUsoeab-bSNySytGlKISSH_4hG8js6cQ1-qfgo5eAc-VbJqLbXmoWkqrAvmfD8Z0csbsz6VZKP8XkC1_vAIKbEprvIh9cSxAKr8jPyJfYYf15IfSLGTNgfwfmlv8Gv-4MOQ2wBXW2Z-15YAZAuuNKwaNG-479V1mHazi7uiBUkK_7DfPdfcI3hskPZVk1g4zKa473lfvc92bs8Fo2R5-I8BaC5t5CbeHwWy0dRNHZuec"/>
+</div>
+<div class="flex items-center justify-center gap-4 py-4">
+<button class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+<span class="material-symbols-outlined text-base">share</span>
+                                    Share
+                                </button>
+<button class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+<span class="material-symbols-outlined text-base">picture_as_pdf</span>
+                                    Export PDF
+                                </button>
+</div>
+<div class="mt-auto pt-4">
+<button class="w-full bg-primary text-white font-semibold py-3 px-6 rounded-lg hover:bg-primary/90 transition-colors">
+                                    Humanize AI Text
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

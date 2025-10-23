@@ -1,0 +1,14 @@
+{
+  "filePath": ".spec-workflow/specs/ai-text-humanizer/requirements.md",
+  "currentVersion": 1,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-10-22T07:32:07.402Z",
+      "trigger": "initial",
+      "approvalId": "approval_1761118327396_cv99yjvqq",
+      "approvalTitle": "需求规格说明书 (requirements.md) - AI 文本人性化重写系统"
+    }
+  ]
+}

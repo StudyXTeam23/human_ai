@@ -1,0 +1,14 @@
+{
+  "filePath": ".spec-workflow/specs/ai-text-humanizer/tasks.md",
+  "currentVersion": 1,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-10-22T07:41:32.540Z",
+      "trigger": "initial",
+      "approvalId": "approval_1761118892535_rblrg3ha1",
+      "approvalTitle": "任务分解文档 (tasks.md) - AI 文本人性化重写系统"
+    }
+  ]
+}

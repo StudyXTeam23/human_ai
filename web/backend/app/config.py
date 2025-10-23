@@ -1,0 +1,23 @@
+"""Application configuration."""
+from pydantic_settings import BaseSettings
+
+
+class Settings(BaseSettings):
+    """Application settings."""
+
+    app_name: str = "AI Text Humanizer API"
+    app_version: str = "1.0.0"
+    cors_origins: list[str] = ["http://localhost:3000"]
+    log_level: str = "INFO"
+    
+    # OpenAI API Configuration
+    openai_api_key: str = "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"
+    openai_model: str = "gpt-4o-mini"  # 使用稳定的模型
+    openai_api_url: str = "https://api.openai.com/v1/chat/completions"
+
+    class Config:
+        env_file = ".env"
+
+
+settings = Settings()
+

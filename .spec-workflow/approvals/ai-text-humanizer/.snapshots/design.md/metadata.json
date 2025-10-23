@@ -1,0 +1,14 @@
+{
+  "filePath": ".spec-workflow/specs/ai-text-humanizer/design.md",
+  "currentVersion": 1,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-10-22T07:37:26.744Z",
+      "trigger": "initial",
+      "approvalId": "approval_1761118646706_mgnxnr7al",
+      "approvalTitle": "技术设计文档 (design.md) - AI 文本人性化重写系统"
+    }
+  ]
+}
