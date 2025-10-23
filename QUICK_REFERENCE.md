@@ -133,10 +133,10 @@ python test_two_modes.py
 
 ```bash
 # 健康检查
-curl http://localhost:8000/health
+curl http://localhost:18201/health
 
 # API 文档
-open http://localhost:8000/docs
+open http://localhost:18201/docs
 ```
 
 ---

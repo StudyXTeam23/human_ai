@@ -72,7 +72,7 @@ curl -I https://api.openai.com
 ### 测试后端 API
 
 ```bash
-curl -X POST http://localhost:8000/api/v1/humanize-file \
+curl -X POST http://localhost:18201/api/v1/humanize-file \
   -H "Content-Type: application/json" \
   -d '{
     "file_path": "/path/to/file",

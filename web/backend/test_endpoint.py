@@ -20,7 +20,7 @@ async def test_humanize_endpoint():
         }
     }
     
-    api_url = "http://localhost:8000/api/v1/humanize"
+    api_url = "http://localhost:18201/api/v1/humanize"
     
     try:
         async with httpx.AsyncClient(timeout=90.0) as client:

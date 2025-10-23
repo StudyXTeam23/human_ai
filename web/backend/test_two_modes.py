@@ -22,7 +22,7 @@ async def test_text_mode():
             with open(test_file, "rb") as f:
                 files = {"file": (test_file.name, f, "text/plain")}
                 response = await client.post(
-                    "http://localhost:8000/api/v1/upload",
+                    "http://localhost:18201/api/v1/upload",
                     files=files
                 )
                 response.raise_for_status()
@@ -44,7 +44,7 @@ async def test_text_mode():
             }
             
             response = await client.post(
-                "http://localhost:8000/api/v1/humanize-file",
+                "http://localhost:18201/api/v1/humanize-file",
                 json=payload
             )
             

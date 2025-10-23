@@ -78,9 +78,9 @@ INFO:     Application startup complete.
 ```
 
 **验证点:**
-- [ ] 访问 http://localhost:8000 - 看到欢迎信息
-- [ ] 访问 http://localhost:8000/docs - 看到 Swagger UI
-- [ ] 访问 http://localhost:8000/health - 返回 {"status": "healthy"}
+- [ ] 访问 http://localhost:18201 - 看到欢迎信息
+- [ ] 访问 http://localhost:18201/docs - 看到 Swagger UI
+- [ ] 访问 http://localhost:18201/health - 返回 {"status": "healthy"}
 
 ### Step 2: 启动前端
 ```bash
@@ -275,7 +275,7 @@ python -m pytest tests/  # 应该通过基础测试
 ## 📞 获取帮助
 
 ### 查看 API 文档
-访问 http://localhost:8000/docs (后端启动后)
+访问 http://localhost:18201/docs (后端启动后)
 
 ### 查看详细规格
 - 需求: `.spec-workflow/specs/ai-text-humanizer/requirements.md`

@@ -41,9 +41,9 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 \`\`\`
 
 访问:
-- API: [http://localhost:8000](http://localhost:8000)
-- 文档: [http://localhost:8000/docs](http://localhost:8000/docs)
-- ReDoc: [http://localhost:8000/redoc](http://localhost:8000/redoc)
+- API: [http://localhost:18201](http://localhost:18201)
+- 文档: [http://localhost:18201/docs](http://localhost:18201/docs)
+- ReDoc: [http://localhost:18201/redoc](http://localhost:18201/redoc)
 
 ### 运行测试
 

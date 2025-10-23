@@ -99,7 +99,7 @@ export function FileUpload({ onFileProcessed, disabled }: FileUploadProps) {
       formData.append("file", file);
 
       // Upload file to backend
-      const response = await fetch("http://localhost:8000/api/v1/upload", {
+      const response = await fetch("http://localhost:18201/api/v1/upload", {
         method: "POST",
         body: formData,
       });

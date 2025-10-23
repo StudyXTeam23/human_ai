@@ -4,7 +4,7 @@
 使用方法:
 1. 在 IDE 中打开这个文件
 2. 右键 -> Run 'run_debug' 或 Debug 'run_debug'
-3. 访问 http://localhost:8000
+3. 访问 http://localhost:18201
 """
 import sys
 import os

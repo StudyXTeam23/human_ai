@@ -36,9 +36,9 @@ INFO:     Application startup complete.
 ```
 
 **验证后端:**
-- 访问 http://localhost:8000 - 应该看到欢迎信息
-- 访问 http://localhost:8000/docs - 应该看到 Swagger API 文档
-- 访问 http://localhost:8000/health - 应该返回 `{"status":"healthy"}`
+- 访问 http://localhost:18201 - 应该看到欢迎信息
+- 访问 http://localhost:18201/docs - 应该看到 Swagger API 文档
+- 访问 http://localhost:18201/health - 应该返回 `{"status":"healthy"}`
 
 ✅ **后端启动成功!**
 
@@ -130,9 +130,9 @@ pnpm dev
 | 服务 | 地址 | 说明 |
 |------|------|------|
 | **前端应用** | http://localhost:3000 | 主应用界面 |
-| **API 文档** | http://localhost:8000/docs | Swagger UI |
-| **API Root** | http://localhost:8000 | API 根路径 |
-| **健康检查** | http://localhost:8000/health | 健康状态 |
+| **API 文档** | http://localhost:18201/docs | Swagger UI |
+| **API Root** | http://localhost:18201 | API 根路径 |
+| **健康检查** | http://localhost:18201/health | 健康状态 |
 
 ---
 
@@ -184,7 +184,7 @@ pnpm dev
 **检查环境变量:**
 1. 创建 `web/frontend/.env.local`:
 ```bash
-NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_API_URL=http://localhost:18201
 ```
 2. 重启前端服务
 
@@ -221,9 +221,9 @@ chmod +x start.sh
 
 ## ✅ 验证清单
 
-- [ ] 后端在 http://localhost:8000 运行
+- [ ] 后端在 http://localhost:18201 运行
 - [ ] 前端在 http://localhost:3000 运行
-- [ ] API 文档可访问 http://localhost:8000/docs
+- [ ] API 文档可访问 http://localhost:18201/docs
 - [ ] 可以输入文本并处理
 - [ ] 可以看到处理结果
 - [ ] 复制和下载功能正常

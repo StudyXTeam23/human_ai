@@ -101,7 +101,7 @@ types/
 Create a `.env.local` file:
 
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_API_URL=http://localhost:18201
 ```
 
 ## Available Scripts
@@ -138,7 +138,7 @@ const response = await humanizeText({
 const formData = new FormData();
 formData.append("file", file);
 
-const response = await fetch("http://localhost:8000/api/v1/upload", {
+const response = await fetch("http://localhost:18201/api/v1/upload", {
   method: "POST",
   body: formData,
 });
@@ -264,7 +264,7 @@ See root project LICENSE file.
 For issues or questions:
 - Check the [main README](../../README.md)
 - Review [FILE_UPLOAD_GUIDE.md](../../FILE_UPLOAD_GUIDE.md)
-- Check the backend API docs at http://localhost:8000/docs
+- Check the backend API docs at http://localhost:18201/docs
 
 ---
 

@@ -420,7 +420,7 @@ INFO: OpenAI API response received
 - **技术文档**: `OPENAI_INTEGRATION.md`
 - **设置指南**: `OPENAI_SETUP_COMPLETE.md`
 - **迁移文档**: `MIGRATION_SUMMARY.md`
-- **API 文档**: http://localhost:8000/docs
+- **API 文档**: http://localhost:18201/docs
 
 ---
 

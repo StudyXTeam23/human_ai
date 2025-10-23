@@ -22,7 +22,7 @@
 ```bash
 ./start-backend.sh
 ```
-后端将运行在: http://localhost:8000
+后端将运行在: http://localhost:18201
 
 2. **启动前端**
 ```bash
@@ -118,7 +118,7 @@ python test_endpoint.py
 
 ### 使用 curl 测试
 ```bash
-curl -X POST http://localhost:8000/api/v1/humanize \
+curl -X POST http://localhost:18201/api/v1/humanize \
   -H "Content-Type: application/json" \
   -d '{
     "source": {
@@ -210,8 +210,8 @@ pip install -r requirements.txt
 ## 📊 API 文档
 
 启动后端后访问:
-- Swagger UI: http://localhost:8000/docs
-- ReDoc: http://localhost:8000/redoc
+- Swagger UI: http://localhost:18201/docs
+- ReDoc: http://localhost:18201/redoc
 
 ## 🔐 安全注意事项
 
@@ -260,7 +260,7 @@ pip install -r requirements.txt
 如有问题,请查看:
 1. **[OPENAI_SETUP_COMPLETE.md](OPENAI_SETUP_COMPLETE.md)** - 设置完成文档
 2. **[START_HERE.md](START_HERE.md)** - 完整启动指南
-3. **API 文档**: http://localhost:8000/docs (后端运行后)
+3. **API 文档**: http://localhost:18201/docs (后端运行后)
 
 ## 📜 许可证
 

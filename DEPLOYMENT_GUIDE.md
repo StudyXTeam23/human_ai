@@ -113,7 +113,7 @@ source venv/bin/activate
 python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
 
 # 访问测试
-curl http://localhost:8000/health
+curl http://localhost:18201/health
 ```
 
 ### 6. 配置系统服务 (Systemd)

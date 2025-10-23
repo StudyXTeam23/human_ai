@@ -314,11 +314,11 @@ console.log(response.content);  // 人性化后的文本
 
 ```bash
 # 测试上传
-curl -X POST http://localhost:8000/api/v1/upload \
+curl -X POST http://localhost:18201/api/v1/upload \
   -F "file=@test.txt"
 
 # 获取 file_path 后测试人性化
-curl -X POST http://localhost:8000/api/v1/humanize-file \
+curl -X POST http://localhost:18201/api/v1/humanize-file \
   -H "Content-Type: application/json" \
   -d '{
     "file_path": "/path/to/uploads/123_test.txt",
@@ -334,8 +334,8 @@ curl -X POST http://localhost:8000/api/v1/humanize-file \
 ## 📝 API 文档
 
 启动后端后访问:
-- Swagger UI: http://localhost:8000/docs
-- ReDoc: http://localhost:8000/redoc
+- Swagger UI: http://localhost:18201/docs
+- ReDoc: http://localhost:18201/redoc
 
 在文档中可以看到新增的 `humanize-file` 端点。
 

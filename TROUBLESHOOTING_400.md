@@ -28,7 +28,7 @@
 ### 方案 2: 使用 curl 直接测试
 
 ```bash
-curl -X POST http://localhost:8000/api/v1/humanize-file \
+curl -X POST http://localhost:18201/api/v1/humanize-file \
   -H "Content-Type: application/json" \
   -d '{
     "file_path": "/Users/yuyuan/studyx_human/web/backend/uploads/test.txt",
@@ -63,7 +63,7 @@ async def test():
     
     async with httpx.AsyncClient(timeout=30) as client:
         response = await client.post(
-            "http://localhost:8000/api/v1/humanize-file",
+            "http://localhost:18201/api/v1/humanize-file",
             json=payload
         )
         print(f"Status: {response.status_code}")

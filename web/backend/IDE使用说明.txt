@@ -22,7 +22,7 @@
    - 或 Debug 'run_debug' (调试)
 
 3. 访问:
-   http://localhost:8000/docs
+   http://localhost:18201/docs
 
 ===============================================
 

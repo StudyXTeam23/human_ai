@@ -173,7 +173,7 @@ python test_openai.py
 使用 curl 测试完整端点:
 
 ```bash
-curl -X POST http://localhost:8000/api/v1/humanize \
+curl -X POST http://localhost:18201/api/v1/humanize \
   -H "Content-Type: application/json" \
   -d '{
     "source": {

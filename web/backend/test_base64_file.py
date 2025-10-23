@@ -31,8 +31,8 @@ async def test_base64_file_upload():
     test_file_path = Path(test_filename)
     test_file_path.write_text(test_content, encoding="utf-8")
     
-    upload_url = "http://localhost:8000/api/v1/upload"
-    humanize_file_url = "http://localhost:8000/api/v1/humanize-file"
+    upload_url = "http://localhost:18201/api/v1/upload"
+    humanize_file_url = "http://localhost:18201/api/v1/humanize-file"
     
     uploaded_file_path = None
     extracted_text = None

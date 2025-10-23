@@ -26,7 +26,7 @@ async def test_humanize_file():
             with open(test_file, "rb") as f:
                 files = {"file": (test_file.name, f, "text/plain")}
                 upload_response = await client.post(
-                    "http://localhost:8000/api/v1/upload",
+                    "http://localhost:18201/api/v1/upload",
                     files=files
                 )
             
@@ -59,7 +59,7 @@ async def test_humanize_file():
             }
             
             humanize_response = await client.post(
-                "http://localhost:8000/api/v1/humanize-file",
+                "http://localhost:18201/api/v1/humanize-file",
                 json=humanize_payload
             )
             
@@ -96,7 +96,7 @@ async def test_humanize_file():
             }
             
             regular_response = await client.post(
-                "http://localhost:8000/api/v1/humanize",
+                "http://localhost:18201/api/v1/humanize",
                 json=regular_payload
             )
             

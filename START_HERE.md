@@ -16,7 +16,7 @@ INFO:     Uvicorn running on http://127.0.0.1:8000
 INFO:     Application startup complete.
 ```
 
-✅ 测试: 打开浏览器访问 http://localhost:8000/docs
+✅ 测试: 打开浏览器访问 http://localhost:18201/docs
 
 ---
 
@@ -94,8 +94,8 @@ lsof -ti:8000 | xargs kill -9
 ## 📊 成功标志
 
 ### ✅ 后端成功
-- 访问 http://localhost:8000 看到欢迎信息
-- 访问 http://localhost:8000/docs 看到 API 文档
+- 访问 http://localhost:18201 看到欢迎信息
+- 访问 http://localhost:18201/docs 看到 API 文档
 - 终端显示 "Application startup complete"
 
 ### ✅ 前端成功
@@ -143,8 +143,8 @@ lsof -ti:8000 | xargs kill -9
 ## 📱 快速访问链接
 
 - 🌐 前端应用: http://localhost:3000
-- 📚 API 文档: http://localhost:8000/docs
-- 🏥 健康检查: http://localhost:8000/health
+- 📚 API 文档: http://localhost:18201/docs
+- 🏥 健康检查: http://localhost:18201/health
 
 ---
 

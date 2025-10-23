@@ -185,7 +185,7 @@ echo "GEMINI_MODEL=gemini-2.0-flash-exp" >> web/backend/.env
 ### 方法 2: 直接 API 测试
 
 ```bash
-curl -X POST "http://localhost:8000/api/v1/humanize" \
+curl -X POST "http://localhost:18201/api/v1/humanize" \
   -H "Content-Type: application/json" \
   -d '{
     "source": {
@@ -202,7 +202,7 @@ curl -X POST "http://localhost:8000/api/v1/humanize" \
 
 ### 方法 3: Swagger UI 测试
 
-1. 访问 http://localhost:8000/docs
+1. 访问 http://localhost:18201/docs
 2. 找到 `POST /api/v1/humanize` 端点
 3. 点击 "Try it out"
 4. 填写请求体

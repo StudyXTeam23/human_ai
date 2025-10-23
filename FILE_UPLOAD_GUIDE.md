@@ -207,7 +207,7 @@ uploads/*
 创建测试 PDF:
 ```bash
 # 使用任意 PDF 文件
-curl -X POST http://localhost:8000/api/v1/upload \
+curl -X POST http://localhost:18201/api/v1/upload \
   -F "file=@test.pdf"
 ```
 
@@ -215,7 +215,7 @@ curl -X POST http://localhost:8000/api/v1/upload \
 
 创建测试 Word 文档:
 ```bash
-curl -X POST http://localhost:8000/api/v1/upload \
+curl -X POST http://localhost:18201/api/v1/upload \
   -F "file=@test.docx"
 ```
 
@@ -227,7 +227,7 @@ curl -X POST http://localhost:8000/api/v1/upload \
 echo "This is a test text file with more than 300 characters..." > test.txt
 # (重复添加文本直到超过 300 字符)
 
-curl -X POST http://localhost:8000/api/v1/upload \
+curl -X POST http://localhost:18201/api/v1/upload \
   -F "file=@test.txt"
 ```
 
@@ -335,7 +335,7 @@ curl -X POST http://localhost:8000/api/v1/upload \
 **症状**: 点击上传后没有反应或报错
 
 **检查**:
-1. 后端服务是否运行 (`http://localhost:8000/docs`)
+1. 后端服务是否运行 (`http://localhost:18201/docs`)
 2. CORS 配置是否正确
 3. 浏览器控制台是否有错误
 4. 文件是否符合要求
@@ -343,10 +343,10 @@ curl -X POST http://localhost:8000/api/v1/upload \
 **解决**:
 ```bash
 # 检查后端服务
-curl http://localhost:8000/health
+curl http://localhost:18201/health
 
 # 检查上传端点
-curl -X POST http://localhost:8000/api/v1/upload \
+curl -X POST http://localhost:18201/api/v1/upload \
   -F "file=@test.txt"
 ```
 
@@ -385,8 +385,8 @@ curl -X POST http://localhost:8000/api/v1/upload \
 ## API 文档
 
 启动后端后访问:
-- Swagger UI: http://localhost:8000/docs
-- ReDoc: http://localhost:8000/redoc
+- Swagger UI: http://localhost:18201/docs
+- ReDoc: http://localhost:18201/redoc
 
 ---
 

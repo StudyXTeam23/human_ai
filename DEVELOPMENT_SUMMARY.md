@@ -163,8 +163,8 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 uvicorn app.main:app --reload
-# API: http://localhost:8000
-# 文档: http://localhost:8000/docs
+# API: http://localhost:18201
+# 文档: http://localhost:18201/docs
 ```
 
 ## 🎯 已实现功能

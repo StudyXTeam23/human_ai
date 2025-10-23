@@ -1211,7 +1211,7 @@ cd web/backend
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-uvicorn app.main:app --reload  # http://localhost:8000
+uvicorn app.main:app --reload  # http://localhost:18201
 ```
 
 ### 9.2 生产环境
@@ -1253,7 +1253,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - NEXT_PUBLIC_API_URL=http://localhost:8000
+      - NEXT_PUBLIC_API_URL=http://localhost:18201
     depends_on:
       - backend
 

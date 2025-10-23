@@ -122,7 +122,7 @@ cd /Users/yuyuan/studyx_human
 ### 5. 测试完整流程
 
 ```bash
-curl -X POST http://localhost:8000/api/v1/humanize \
+curl -X POST http://localhost:18201/api/v1/humanize \
   -H "Content-Type: application/json" \
   -d '{
     "source": {

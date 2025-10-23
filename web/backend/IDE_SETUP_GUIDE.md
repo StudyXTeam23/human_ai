@@ -12,7 +12,7 @@
 
 1. **在 IDE 中打开** `/Users/yuyuan/studyx_human/web/backend/run_debug.py`
 2. **右键文件** → **Run 'run_debug'** 或 **Debug 'run_debug'**
-3. **访问** http://localhost:8000/docs
+3. **访问** http://localhost:18201/docs
 
 ## 📋 完整设置步骤
 
@@ -135,13 +135,13 @@ web/backend/app/services/file_processor.py:45
 📍 工作目录: /Users/yuyuan/studyx_human/web/backend
 📍 Python 路径: /Users/yuyuan/studyx_human/web/backend/venv/bin/python
 🌐 代理设置: http://127.0.0.1:7890
-🔗 访问地址: http://localhost:8000
-📚 API 文档: http://localhost:8000/docs
+🔗 访问地址: http://localhost:18201
+📚 API 文档: http://localhost:18201/docs
 ```
 
 ### 测试 API
 
-访问 http://localhost:8000/docs 可以直接测试所有 API 端点。
+访问 http://localhost:18201/docs 可以直接测试所有 API 端点。
 
 ## 📝 PyCharm 运行配置 (可选)
 

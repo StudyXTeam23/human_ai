@@ -18,8 +18,8 @@
    - 或者直接点击编辑器右上角的绿色运行按钮
 
 4. **访问应用**
-   - http://localhost:8000
-   - http://localhost:8000/docs (API 文档)
+   - http://localhost:18201
+   - http://localhost:18201/docs (API 文档)
 
 ### 方法 2: 创建运行配置
 
@@ -156,8 +156,8 @@
 🚀 启动开发服务器...
 📍 应用: AI Text Humanizer v1.0.0
 🌐 代理: http://127.0.0.1:7890
-🔗 访问: http://localhost:8000
-📚 文档: http://localhost:8000/docs
+🔗 访问: http://localhost:18201
+📚 文档: http://localhost:18201/docs
 
 INFO:     Uvicorn running on http://0.0.0.0:8000
 INFO:     Application startup complete.
@@ -186,7 +186,7 @@ logger.debug("This is a debug message")
 
 ### 方法 1: Swagger UI
 
-访问 http://localhost:8000/docs
+访问 http://localhost:18201/docs
 
 - 可视化 API 文档
 - 可以直接测试所有端点

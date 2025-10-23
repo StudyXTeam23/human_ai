@@ -167,9 +167,9 @@
 
 **验收标准**:
 - ✅ uvicorn app.main:app --reload 可以启动
-- ✅ 访问 http://localhost:8000 返回正常
-- ✅ 访问 http://localhost:8000/docs 显示 API 文档
-- ✅ 访问 http://localhost:8000/health 返回健康状态
+- ✅ 访问 http://localhost:18201 返回正常
+- ✅ 访问 http://localhost:18201/docs 显示 API 文档
+- ✅ 访问 http://localhost:18201/health 返回健康状态
 ```
 
 ---

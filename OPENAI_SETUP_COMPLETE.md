@@ -12,7 +12,7 @@ OpenAI API 已成功集成到 AI Text Humanizer 项目中!后端服务现在使�
 - 响应时间: **< 5 秒**
 
 ### ✅ 端到端测试通过
-- API 端点: `http://localhost:8000/api/v1/humanize`
+- API 端点: `http://localhost:18201/api/v1/humanize`
 - 输入验证: **正常工作**
 - 文本改写: **正常工作**
 - 响应格式: **符合规范**
@@ -38,7 +38,7 @@ cd /Users/yuyuan/studyx_human
 
 ### 使用 curl 测试
 ```bash
-curl -X POST http://localhost:8000/api/v1/humanize \
+curl -X POST http://localhost:18201/api/v1/humanize \
   -H "Content-Type: application/json" \
   -d '{
     "source": {
@@ -233,7 +233,7 @@ cd web/backend && source venv/bin/activate && python test_endpoint.py
 ./start-frontend.sh
 
 # 检查后端状态
-curl http://localhost:8000/docs
+curl http://localhost:18201/docs
 
 # 检查前端状态
 curl http://localhost:3000

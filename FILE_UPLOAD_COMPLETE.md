@@ -160,7 +160,7 @@
 
 **请求**:
 ```bash
-curl -X POST http://localhost:8000/api/v1/upload \
+curl -X POST http://localhost:18201/api/v1/upload \
   -F "file=@test.pdf"
 ```
 
@@ -221,7 +221,7 @@ echo "This is a test file with more than 300 characters..." > test.txt
 # (添加更多内容直到超过 300 字符)
 
 # 上传文件
-curl -X POST http://localhost:8000/api/v1/upload \
+curl -X POST http://localhost:18201/api/v1/upload \
   -F "file=@test.txt"
 ```
 

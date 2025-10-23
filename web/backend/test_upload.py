@@ -19,7 +19,7 @@ async def test_file_upload():
     print(f"   文本长度: {len(test_content)} 字符\n")
     
     # Upload file
-    api_url = "http://localhost:8000/api/v1/upload"
+    api_url = "http://localhost:18201/api/v1/upload"
     
     try:
         async with httpx.AsyncClient(timeout=30.0) as client:
@@ -48,7 +48,7 @@ async def test_file_upload():
                 print("测试文本人性化处理...")
                 print("=" * 60 + "\n")
                 
-                humanize_url = "http://localhost:8000/api/v1/humanize"
+                humanize_url = "http://localhost:18201/api/v1/humanize"
                 payload = {
                     "source": {
                         "mode": "document",
