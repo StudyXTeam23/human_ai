@@ -62,13 +62,6 @@ export function FileUpload({ onFileProcessed, disabled }: FileUploadProps) {
 
   const uploadFile = async (file: File) => {
     // Validate file type
-    const allowedTypes = [
-      "application/pdf",
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-      "text/plain",
-    ];
-
     const allowedExtensions = [".pdf", ".docx", ".pptx", ".txt"];
     const fileExtension = file.name.substring(file.name.lastIndexOf(".")).toLowerCase();
 

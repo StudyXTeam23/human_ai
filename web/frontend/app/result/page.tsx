@@ -45,13 +45,13 @@ function ResultContent() {
           description: "Humanized text copied to clipboard",
         });
       setTimeout(() => setCopied(false), 2000);
-    } catch (error) {
+    } catch {
       toast({
         title: "Copy failed",
         description: "Unable to copy to clipboard",
         variant: "destructive",
       });
-    } // Remove unused catch parameter
+    }
   };
 
   const handleDownload = () => {
