@@ -18,11 +18,10 @@ export const API_CONFIG = {
    * - Development: Modify DEFAULT_LOCAL_URL
    * - Production: Set NEXT_PUBLIC_API_URL in .env.production
    */
-  // Use same-origin in production to work with Vercel rewrites and avoid mixed-content
   BASE_URL: process.env.NEXT_PUBLIC_API_URL || 
            (process.env.NODE_ENV === 'production' 
-             ? ''                            // Production: relative base, rely on rewrites
-             : 'http://localhost:18201'),    // Development: local backend
+             ? 'https://api.yourdomain.com'  // Production environment default domain (needs modification)
+             : 'http://localhost:18201'),    // Development environment default local address
   
   /**
    * API endpoint paths
@@ -81,7 +80,16 @@ export const API_ENDPOINTS = API_CONFIG.ENDPOINTS;
  * Get complete API URL
  */
 export function getApiUrl(endpoint: keyof typeof API_CONFIG.ENDPOINTS): string {
-  return `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS[endpoint]}`;
+  // Avoid mixed content: if page is HTTPS and BASE_URL is http://, prefer relative path
+  let base = API_CONFIG.BASE_URL || "";
+  if (typeof window !== "undefined") {
+    const isHttpsPage = window.location.protocol === "https:";
+    const isHttpApi = typeof base === "string" && base.startsWith("http://");
+    if (isHttpsPage && isHttpApi) {
+      base = ""; // use relative path to allow Vercel rewrites/proxy over HTTPS
+    }
+  }
+  return `${base}${API_CONFIG.ENDPOINTS[endpoint]}`;
 }
 
 /**
