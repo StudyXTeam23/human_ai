@@ -11,17 +11,35 @@ export const API_CONFIG = {
    * Backend API base URL
    * 
    * Configuration priority:
-   * 1. Environment variable NEXT_PUBLIC_API_URL
+   * 1. Environment variable NEXT_PUBLIC_API_URL (but will use relative path if HTTP in HTTPS context)
    * 2. Default value (automatically selected based on environment)
    * 
-   * How to modify:
-   * - Development: Modify DEFAULT_LOCAL_URL
-   * - Production: Set NEXT_PUBLIC_API_URL in .env.production
+   * Note: In Vercel/production HTTPS environments, always use relative paths
+   * to avoid mixed content errors. The vercel.json rewrites will proxy to backend.
    */
-  BASE_URL: process.env.NEXT_PUBLIC_API_URL || 
-           (process.env.NODE_ENV === 'production' 
-             ? 'https://api.yourdomain.com'  // Production environment default domain (needs modification)
-             : 'http://localhost:18201'),    // Development environment default local address
+  BASE_URL: (() => {
+    // Check if we're in a production HTTPS environment (like Vercel)
+    const isVercel = process.env.VERCEL === '1';
+    const isProduction = process.env.NODE_ENV === 'production';
+    
+    // In Vercel/production, use relative path (empty string) to allow rewrites
+    if (isVercel || (isProduction && typeof window !== 'undefined' && window.location.protocol === 'https:')) {
+      return '';
+    }
+    
+    // Otherwise use environment variable or default
+    const envUrl = process.env.NEXT_PUBLIC_API_URL;
+    if (envUrl) {
+      // Even if env var is set, check if it's HTTP in HTTPS context
+      if (typeof window !== 'undefined' && window.location.protocol === 'https:' && envUrl.startsWith('http://')) {
+        return '';
+      }
+      return envUrl;
+    }
+    
+    // Default: localhost for development
+    return 'http://localhost:18201';
+  })(),
   
   /**
    * API endpoint paths
@@ -80,15 +98,17 @@ export const API_ENDPOINTS = API_CONFIG.ENDPOINTS;
  * Get complete API URL
  */
 export function getApiUrl(endpoint: keyof typeof API_CONFIG.ENDPOINTS): string {
-  // Avoid mixed content: if page is HTTPS and BASE_URL is http://, prefer relative path
+  // Always use relative path in HTTPS environments to avoid mixed content
   let base = API_CONFIG.BASE_URL || "";
-  if (typeof window !== "undefined") {
-    const isHttpsPage = window.location.protocol === "https:";
-    const isHttpApi = typeof base === "string" && base.startsWith("http://");
-    if (isHttpsPage && isHttpApi) {
-      base = ""; // use relative path to allow Vercel rewrites/proxy over HTTPS
+  
+  // Double-check: if we're in browser and page is HTTPS, force relative path
+  if (typeof window !== "undefined" && window.location.protocol === "https:") {
+    // Remove any HTTP URL to use relative path (Vercel rewrites will handle it)
+    if (base.startsWith("http://")) {
+      base = "";
     }
   }
+  
   return `${base}${API_CONFIG.ENDPOINTS[endpoint]}`;
 }
 
@@ -96,6 +116,17 @@ export function getApiUrl(endpoint: keyof typeof API_CONFIG.ENDPOINTS): string {
  * Get custom API URL
  */
 export function getCustomApiUrl(path: string): string {
-  return `${API_CONFIG.BASE_URL}${path}`;
+  // Same logic as getApiUrl to avoid mixed content
+  let base = API_CONFIG.BASE_URL || "";
+  
+  if (typeof window !== "undefined" && window.location.protocol === "https:") {
+    if (base.startsWith("http://")) {
+      base = "";
+    }
+  }
+  
+  // Ensure path starts with /
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  return `${base}${normalizedPath}`;
 }
 

@@ -4,7 +4,7 @@ import { useState, useRef, DragEvent } from "react";
 import { Upload, File, X, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { API_BASE_URL } from "@/lib/api";
+import { getApiUrl } from "@/lib/api";
 
 interface FileUploadProps {
   onFileProcessed: (text: string, base64: string, filename: string, filepath?: string) => void;
@@ -99,8 +99,8 @@ export function FileUpload({ onFileProcessed, disabled }: FileUploadProps) {
       const formData = new FormData();
       formData.append("file", file);
 
-      // Upload file to backend (using global API_BASE_URL)
-      const response = await fetch(`${API_BASE_URL}/api/v1/upload`, {
+      // Upload file to backend (using getApiUrl to avoid mixed content)
+      const response = await fetch(getApiUrl('UPLOAD'), {
         method: "POST",
         body: formData,
       });
