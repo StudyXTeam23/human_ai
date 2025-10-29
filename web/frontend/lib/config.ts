@@ -18,10 +18,11 @@ export const API_CONFIG = {
    * - Development: Modify DEFAULT_LOCAL_URL
    * - Production: Set NEXT_PUBLIC_API_URL in .env.production
    */
+  // Use same-origin in production to work with Vercel rewrites and avoid mixed-content
   BASE_URL: process.env.NEXT_PUBLIC_API_URL || 
            (process.env.NODE_ENV === 'production' 
-             ? 'https://api.yourdomain.com'  // Production environment default domain (needs modification)
-             : 'http://localhost:18201'),    // Development environment default local address
+             ? ''                            // Production: relative base, rely on rewrites
+             : 'http://localhost:18201'),    // Development: local backend
   
   /**
    * API endpoint paths
