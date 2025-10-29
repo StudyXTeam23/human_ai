@@ -1,30 +1,30 @@
 /**
- * 前端全局配置文件
- * 集中管理所有环境相关的配置
+ * Frontend global configuration file
+ * Centralized management of all environment-related configurations
  */
 
 /**
- * API 配置
+ * API Configuration
  */
 export const API_CONFIG = {
   /**
-   * 后端 API 基础 URL
+   * Backend API base URL
    * 
-   * 配置优先级:
-   * 1. 环境变量 NEXT_PUBLIC_API_URL
-   * 2. 默认值 (根据环境自动选择)
+   * Configuration priority:
+   * 1. Environment variable NEXT_PUBLIC_API_URL
+   * 2. Default value (automatically selected based on environment)
    * 
-   * 修改方法:
-   * - 开发环境: 修改 DEFAULT_LOCAL_URL
-   * - 生产环境: 在 .env.production 中设置 NEXT_PUBLIC_API_URL
+   * How to modify:
+   * - Development: Modify DEFAULT_LOCAL_URL
+   * - Production: Set NEXT_PUBLIC_API_URL in .env.production
    */
   BASE_URL: process.env.NEXT_PUBLIC_API_URL || 
            (process.env.NODE_ENV === 'production' 
-             ? 'https://api.yourdomain.com'  // 生产环境默认域名 (需要修改)
-             : 'http://localhost:18201'),    // 开发环境默认本地地址
+             ? 'https://api.yourdomain.com'  // Production environment default domain (needs modification)
+             : 'http://localhost:18201'),    // Development environment default local address
   
   /**
-   * API 端点路径
+   * API endpoint paths
    */
   ENDPOINTS: {
     HEALTH: '/health',
@@ -34,27 +34,27 @@ export const API_CONFIG = {
   },
   
   /**
-   * 请求超时设置 (毫秒)
+   * Request timeout setting (milliseconds)
    */
-  TIMEOUT: 120000, // 2 分钟
+  TIMEOUT: 120000, // 2 minutes
 } as const;
 
 /**
- * 应用配置
+ * Application configuration
  */
 export const APP_CONFIG = {
   /**
-   * 应用名称
+   * Application name
    */
   NAME: 'AI Text Humanizer',
   
   /**
-   * 应用版本
+   * Application version
    */
   VERSION: '1.0.0',
   
   /**
-   * 文件上传配置
+   * File upload configuration
    */
   FILE_UPLOAD: {
     MAX_SIZE: 40 * 1024 * 1024, // 40MB
@@ -62,7 +62,7 @@ export const APP_CONFIG = {
   },
   
   /**
-   * 文本输入配置
+   * Text input configuration
    */
   TEXT_INPUT: {
     MIN_LENGTH: 300,
@@ -71,20 +71,20 @@ export const APP_CONFIG = {
 } as const;
 
 /**
- * 导出常用配置的快捷访问
+ * Export quick access to commonly used configurations
  */
 export const API_BASE_URL = API_CONFIG.BASE_URL;
 export const API_ENDPOINTS = API_CONFIG.ENDPOINTS;
 
 /**
- * 获取完整的 API URL
+ * Get complete API URL
  */
 export function getApiUrl(endpoint: keyof typeof API_CONFIG.ENDPOINTS): string {
   return `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS[endpoint]}`;
 }
 
 /**
- * 获取自定义 API URL
+ * Get custom API URL
  */
 export function getCustomApiUrl(path: string): string {
   return `${API_CONFIG.BASE_URL}${path}`;

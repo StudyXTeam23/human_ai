@@ -4,7 +4,7 @@
 
 import { API_BASE_URL, getApiUrl } from './config';
 
-// 兼容导出,供其他文件使用
+// Compatible export for use by other files
 export { API_BASE_URL };
 
 interface HumanizeRequest {

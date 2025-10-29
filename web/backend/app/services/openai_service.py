@@ -129,7 +129,7 @@ class OpenAIService:
             prompt += f"Style: {style_instructions.get(style, style_instructions['Neutral'])}\n"
 
         # Add the original text
-        prompt += f"\n原文:\n{text}\n\n请直接输出改写后的文本,不要包含任何解释或额外说明:"
+        prompt += f"\nOriginal text:\n{text}\n\nOutput only the rewritten text without any explanation or additional notes:"
 
         return prompt
 
@@ -263,8 +263,8 @@ class OpenAIService:
                 
                 if was_truncated:
                     truncation_notice = (
-                        "\n\n[注意: 原始文本过长已被截断。"
-                        f"原始约 {text_tokens:,} tokens，已截断至 {self.MAX_INPUT_TOKENS:,} tokens]"
+                        "\n\n[Note: The original text was too long and has been truncated. "
+                        f"Original: ~{text_tokens:,} tokens, truncated to {self.MAX_INPUT_TOKENS:,} tokens]"
                     )
                     response_data["content"] = rewritten_text + truncation_notice
                     response_data["wasTruncated"] = True

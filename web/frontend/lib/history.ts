@@ -1,6 +1,6 @@
 /**
- * 历史记录管理
- * 使用 localStorage 保存历史记录到本地
+ * History record management
+ * Use localStorage to save history records locally
  */
 
 export interface HistoryItem {
@@ -20,10 +20,10 @@ export interface HistoryItem {
 }
 
 const HISTORY_KEY = "humanizer_history";
-const MAX_HISTORY_ITEMS = 50; // 最多保存50条记录
+const MAX_HISTORY_ITEMS = 50; // Save at most 50 records
 
 /**
- * 获取所有历史记录
+ * Get all history records
  */
 export function getHistory(): HistoryItem[] {
   if (typeof window === "undefined") return [];
@@ -41,7 +41,7 @@ export function getHistory(): HistoryItem[] {
 }
 
 /**
- * 添加新的历史记录
+ * Add new history record
  */
 export function addHistoryItem(item: Omit<HistoryItem, "id" | "timestamp">): HistoryItem {
   const newItem: HistoryItem = {
@@ -51,9 +51,9 @@ export function addHistoryItem(item: Omit<HistoryItem, "id" | "timestamp">): His
   };
 
   const history = getHistory();
-  history.unshift(newItem); // 添加到开头
+  history.unshift(newItem); // Add to the beginning
 
-  // 限制历史记录数量
+  // Limit history record count
   const limitedHistory = history.slice(0, MAX_HISTORY_ITEMS);
   
   try {
@@ -67,7 +67,7 @@ export function addHistoryItem(item: Omit<HistoryItem, "id" | "timestamp">): His
 }
 
 /**
- * 删除指定的历史记录
+ * Delete specified history record
  */
 export function deleteHistoryItem(id: string): void {
   const history = getHistory();
@@ -82,7 +82,7 @@ export function deleteHistoryItem(id: string): void {
 }
 
 /**
- * 清除所有历史记录
+ * Clear all history records
  */
 export function clearHistory(): void {
   try {
@@ -94,7 +94,7 @@ export function clearHistory(): void {
 }
 
 /**
- * 获取单条历史记录
+ * Get single history record
  */
 export function getHistoryItem(id: string): HistoryItem | null {
   const history = getHistory();
@@ -102,7 +102,7 @@ export function getHistoryItem(id: string): HistoryItem | null {
 }
 
 /**
- * 导出历史记录为 JSON 文件
+ * Export history records as JSON file
  */
 export function exportHistoryToJSON(): void {
   const history = getHistory();
@@ -120,7 +120,7 @@ export function exportHistoryToJSON(): void {
 }
 
 /**
- * 从 JSON 文件导入历史记录
+ * Import history records from JSON file
  */
 export function importHistoryFromJSON(file: File): Promise<number> {
   return new Promise((resolve, reject) => {
@@ -138,7 +138,7 @@ export function importHistoryFromJSON(file: File): Promise<number> {
         const currentHistory = getHistory();
         const mergedHistory = [...importedHistory, ...currentHistory];
         
-        // 去重 (基于时间戳和原始文本)
+        // Remove duplicates (based on timestamp and original text)
         const uniqueHistory = mergedHistory.filter(
           (item, index, self) =>
             index ===
@@ -149,7 +149,7 @@ export function importHistoryFromJSON(file: File): Promise<number> {
             )
         );
 
-        // 限制数量
+        // Limit count
         const limitedHistory = uniqueHistory.slice(0, MAX_HISTORY_ITEMS);
         
         localStorage.setItem(HISTORY_KEY, JSON.stringify(limitedHistory));
@@ -165,7 +165,7 @@ export function importHistoryFromJSON(file: File): Promise<number> {
 }
 
 /**
- * 获取历史记录统计信息
+ * Get history record statistics
  */
 export function getHistoryStats() {
   const history = getHistory();

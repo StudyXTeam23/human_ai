@@ -111,53 +111,53 @@ class GeminiService:
         """
         # Base instruction
         base_instruction = (
-            "你是一位专业的文本改写专家。请将下面的 AI 生成文本改写成更自然、"
-            "更具人类风格的内容,使其读起来更流畅、更真实。\n\n"
+            "You are a professional text rewriting expert. Please rewrite the following AI-generated text "
+            "into more natural, human-like content that reads more smoothly and authentically.\n\n"
         )
 
         # Length instruction
         length_instructions = {
-            "Normal": "保持原文长度,不要明显增加或减少字数。",
-            "Concise": "简化内容,使文本更简洁,去除冗余信息,保留核心要点。",
-            "Expanded": "扩展内容,添加更多细节、例子或解释,使文本更丰富完整。",
+            "Normal": "Maintain approximately the same length as the original text.",
+            "Concise": "Simplify content, make the text more concise, remove redundant information, keep core points.",
+            "Expanded": "Expand content, add more details, examples or explanations, make the text richer and more complete.",
         }
 
         # Similarity instruction
         similarity_instructions = {
-            "Low": "可以大幅改写,改变句式结构和用词,但保持核心意思。",
-            "Moderate": "适度改写,保持大部分原文结构,优化表达方式。",
-            "High": "轻微改写,主要优化用词和语气,尽量保持原文结构。",
-            "Neutral": "根据内容自然改写,平衡保持原意和优化表达。",
+            "Low": "Feel free to significantly rewrite, change sentence structure and word choice, but maintain the core meaning.",
+            "Moderate": "Moderately rewrite, keep most of the original structure, optimize expression.",
+            "High": "Slightly rewrite, mainly optimize word choice and tone, try to maintain the original structure.",
+            "Neutral": "Naturally rewrite based on content, balance maintaining original meaning and optimizing expression.",
         }
 
         # Style instruction
         style_instructions = {
-            "Neutral": "使用中性、平衡的语气,适合大多数场景。",
-            "Academic": "使用学术化、正式的语言风格,避免口语化表达。",
-            "Business": "使用专业、商务的语气,简洁明了、重点突出。",
-            "Creative": "使用创意性、富有想象力的表达,增加文学色彩。",
-            "Technical": "使用技术性、精确的语言,专业术语准确。",
-            "Friendly": "使用友好、亲切的语气,像朋友间的对话。",
-            "Informal": "使用轻松、非正式的语言,更口语化。",
-            "Reference": "使用参考性、信息性的语气,客观中立。",
-            "Custom": f"使用以下自定义风格: {custom_style}",
+            "Neutral": "Use a neutral, balanced tone suitable for most scenarios.",
+            "Academic": "Use academic, formal language style, avoid colloquial expressions.",
+            "Business": "Use professional, business tone, concise and clear with emphasis on key points.",
+            "Creative": "Use creative, imaginative expressions, add literary appeal.",
+            "Technical": "Use technical, precise language with accurate terminology.",
+            "Friendly": "Use friendly, warm tone like a conversation between friends.",
+            "Informal": "Use relaxed, informal language, more conversational.",
+            "Reference": "Use referential, informative tone that is objective and neutral.",
+            "Custom": f"Use the following custom style: {custom_style}",
         }
 
         # Build complete prompt
         prompt = (
             f"{base_instruction}"
-            f"**改写要求:**\n"
-            f"1. 长度: {length_instructions.get(length, length_instructions['Normal'])}\n"
-            f"2. 相似度: {similarity_instructions.get(similarity, similarity_instructions['Neutral'])}\n"
-            f"3. 风格: {style_instructions.get(style, style_instructions['Neutral'])}\n\n"
-            f"**重要规则:**\n"
-            f"- 保持原文的核心意思和关键信息\n"
-            f"- 使文本更自然、流畅、易读\n"
-            f"- 避免机械化、模板化的表达\n"
-            f"- 确保语法正确、逻辑清晰\n"
-            f"- 直接输出改写后的文本,不要添加任何解释或前缀\n\n"
-            f"**原文:**\n{text}\n\n"
-            f"**改写后的文本:**"
+            f"**Rewriting Requirements:**\n"
+            f"1. Length: {length_instructions.get(length, length_instructions['Normal'])}\n"
+            f"2. Similarity: {similarity_instructions.get(similarity, similarity_instructions['Neutral'])}\n"
+            f"3. Style: {style_instructions.get(style, style_instructions['Neutral'])}\n\n"
+            f"**Important Rules:**\n"
+            f"- Maintain the core meaning and key information of the original text\n"
+            f"- Make the text more natural, flowing, and readable\n"
+            f"- Avoid mechanical, template-like expressions\n"
+            f"- Ensure correct grammar and clear logic\n"
+            f"- Output only the rewritten text directly, without adding any explanation or prefix\n\n"
+            f"**Original Text:**\n{text}\n\n"
+            f"**Rewritten Text:**"
         )
 
         return prompt

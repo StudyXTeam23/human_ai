@@ -9,15 +9,15 @@ import { z } from "zod";
 export const humanizeSchema = z
   .object({
     mode: z.enum(["text", "document"], {
-      required_error: "请选择输入模式",
+      required_error: "Please select input mode",
     }),
-    text: z.string().min(1, "文本不能为空"),
+    text: z.string().min(1, "Text cannot be empty"),
     file: z.instanceof(File).optional(),
     length: z.enum(["Normal", "Concise", "Expanded"], {
-      required_error: "请选择长度选项",
+      required_error: "Please select length option",
     }),
     similarity: z.enum(["Low", "Moderate", "High", "Neutral"], {
-      required_error: "请选择相似度选项",
+      required_error: "Please select similarity option",
     }),
     style: z.enum(
       [
@@ -32,10 +32,10 @@ export const humanizeSchema = z
         "Custom",
       ],
       {
-        required_error: "请选择风格选项",
+        required_error: "Please select style option",
       }
     ),
-    customStyle: z.string().max(120, "自定义风格描述最多 120 个字符").optional(),
+    customStyle: z.string().max(120, "Custom style description up to 120 characters").optional(),
   })
   .refine(
     (data) => {
@@ -47,7 +47,7 @@ export const humanizeSchema = z
       return data.text.length > 0;
     },
     {
-      message: "文本模式需要 300-5000 个字符",
+      message: "Text mode requires 300-5000 characters",
       path: ["text"],
     }
   )
@@ -60,7 +60,7 @@ export const humanizeSchema = z
       return true;
     },
     {
-      message: "请提供自定义风格描述",
+      message: "Please provide custom style description",
       path: ["customStyle"],
     }
   );
@@ -85,7 +85,7 @@ export function validateFile(file: File): { valid: boolean; error?: string } {
 
   // Check file size
   if (file.size > MAX_SIZE) {
-    return { valid: false, error: "文件大小超过 40MB" };
+    return { valid: false, error: "File size exceeds 40MB" };
   }
 
   // Check file type by extension (more reliable than MIME type)
@@ -93,7 +93,7 @@ export function validateFile(file: File): { valid: boolean; error?: string } {
   const hasValidExtension = ALLOWED_EXTENSIONS.some((ext) => fileName.endsWith(ext));
 
   if (!hasValidExtension && !ALLOWED_TYPES.includes(file.type)) {
-    return { valid: false, error: "不支持的文件格式,仅支持 PDF、Word、PowerPoint 和 TXT" };
+    return { valid: false, error: "Unsupported file format, only supports PDF, Word, PowerPoint and TXT" };
   }
 
   return { valid: true };

@@ -74,14 +74,14 @@ async def humanize_file(request: HumanizeFileRequest) -> HumanizeResponse:
             f"base64 length: {len(file_base64)}"
         )
         
-        # 根据 text 是否为空决定传递方式:
-        # - text 不为空: 只传递 text (文本模式)
-        # - text 为空: 传递 file_data (文件 base64 模式)
+        # Determine transfer mode based on whether text is empty:
+        # - text not empty: only pass text (text mode)
+        # - text empty: pass file_data (file base64 mode)
         has_text = bool(request.text and request.text.strip())
         
         if has_text:
             logger.info(f"Using text mode: {len(request.text)} characters")
-            # 文本模式: 只传递提取的文本
+            # Text mode: only pass extracted text
             try:
                 result = await openai_service.humanize(
                     text=request.text,
@@ -89,17 +89,17 @@ async def humanize_file(request: HumanizeFileRequest) -> HumanizeResponse:
                     similarity=request.params.similarity.value,
                     style=request.params.style.value,
                     custom_style=request.params.customStyle,
-                    file_data=None  # 不传递文件数据
+                    file_data=None  # Don't pass file data
                 )
             except Exception as openai_error:
                 logger.error(f"OpenAI service error (text mode): {openai_error}", exc_info=True)
                 raise
         else:
             logger.info(f"Using file base64 mode: {len(file_base64)} characters")
-            # 文件模式: 传递 base64 编码的文件
+            # File mode: pass base64 encoded file
             try:
                 result = await openai_service.humanize(
-                    text="",  # 空文本
+                    text="",  # Empty text
                     length=request.params.length.value,
                     similarity=request.params.similarity.value,
                     style=request.params.style.value,

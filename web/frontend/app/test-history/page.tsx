@@ -13,7 +13,7 @@ export default function TestHistoryPage() {
       console.log("Testing addHistoryItem...");
       
       const item = addHistoryItem({
-        originalText: "这是一段测试文本，用于测试历史记录功能。".repeat(10),
+        originalText: "This is a test text for testing the history record functionality.".repeat(10),
         humanizedText: "This is a test text for testing the history feature.".repeat(10),
         processingTime: 1500,
         params: {
@@ -27,7 +27,7 @@ export default function TestHistoryPage() {
       console.log("Result:", item);
       setResult(JSON.stringify(item, null, 2));
       
-      // 读取历史记录
+      // Read history records
       const history = getHistory();
       console.log("Total history items:", history.length);
       console.log("Latest item:", history[0]);
@@ -52,13 +52,13 @@ export default function TestHistoryPage() {
     <div className="container mx-auto p-8">
       <Card>
         <CardHeader>
-          <CardTitle>测试历史记录功能</CardTitle>
+          <CardTitle>Test History Record Functionality</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex gap-2">
-            <Button onClick={testAddHistory}>测试添加历史</Button>
-            <Button onClick={viewHistory} variant="outline">查看历史</Button>
-            <Button onClick={clearTest} variant="destructive">清空历史</Button>
+            <Button onClick={testAddHistory}>Test Add History</Button>
+            <Button onClick={viewHistory} variant="outline">View History</Button>
+            <Button onClick={clearTest} variant="destructive">Clear History</Button>
           </div>
 
           {result && (

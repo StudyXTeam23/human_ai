@@ -114,7 +114,7 @@ export default function Home() {
         });
       }
 
-      // Save to history store (旧的历史记录系统)
+      // Save to history store (legacy history system)
       addToHistoryStore({
         preview: data.text.substring(0, 100),
         fullText: data.text,
@@ -128,7 +128,7 @@ export default function Home() {
         },
       });
 
-      // 保存到本地 JSON 历史记录 (新的历史记录系统)
+      // Save to local JSON history (new history system)
       try {
         const historyItem = addHistoryItem({
           originalText: data.text,
@@ -149,26 +149,26 @@ export default function Home() {
         console.error("Failed to save history:", historyError);
       }
 
-      // 保存数据到 localStorage 用于结果页面显示
+      // Save data to localStorage for result page display
       localStorage.setItem("originalText", data.text);
       localStorage.setItem("humanizedText", response.content);
       localStorage.setItem("processingTime", response.processingTime.toString());
 
       toast({
-        title: "成功",
+        title: "Success",
         description: inputMode === "document" 
-          ? `文档 "${fileName}" 已成功处理`
-          : "文本已成功人性化处理",
+          ? `Document "${fileName}" processed successfully`
+          : "Text humanized successfully",
       });
 
-      // 跳转到结果页面
+      // Navigate to result page
       setTimeout(() => {
         window.location.href = "/result";
       }, 500);
     } catch (error) {
       toast({
-        title: "错误",
-        description: error instanceof Error ? error.message : "处理失败",
+        title: "Error",
+        description: error instanceof Error ? error.message : "Processing failed",
         variant: "destructive",
       });
     } finally {
@@ -249,10 +249,10 @@ export default function Home() {
                     <div className="flex justify-between items-center text-sm">
                       <div>
                         {isTooShort && (
-                          <span className="text-red-500">最少需要 300 个字符</span>
+                          <span className="text-red-500">Minimum 300 characters required</span>
                         )}
                         {isTooLong && (
-                          <span className="text-red-500">最多支持 5000 个字符</span>
+                          <span className="text-red-500">Maximum 5000 characters supported</span>
                         )}
                       </div>
                       <span
@@ -273,7 +273,7 @@ export default function Home() {
                   />
                   {text && inputMode === "document" && (
                     <div className="mt-4 space-y-2">
-                      <Label>提取的文本预览</Label>
+                      <Label>Extracted Text Preview</Label>
                       <div className="border rounded-lg p-4 bg-slate-50 dark:bg-slate-900 max-h-[200px] overflow-y-auto">
                         <p className="text-sm text-slate-700 dark:text-slate-300 whitespace-pre-wrap">
                           {text.substring(0, 500)}
@@ -282,11 +282,11 @@ export default function Home() {
                       </div>
                       <div className="flex justify-between items-center text-sm">
                         <span className="text-slate-500">
-                          已提取 {count} 个字符 (文件模式无长度限制)
+                          Extracted {count} characters (no length limit in document mode)
                         </span>
                         {fileName && (
                           <span className="text-slate-500">
-                            文件: {fileName}
+                            File: {fileName}
                           </span>
                         )}
                       </div>

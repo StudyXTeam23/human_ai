@@ -74,8 +74,8 @@ export function FileUpload({ onFileProcessed, disabled }: FileUploadProps) {
 
     if (!allowedExtensions.includes(fileExtension)) {
       toast({
-        title: "不支持的文件类型",
-        description: "请上传 PDF、DOCX、PPTX 或 TXT 文件",
+        title: "Unsupported file type",
+        description: "Please upload PDF, DOCX, PPTX or TXT files",
         variant: "destructive",
       });
       return;
@@ -85,8 +85,8 @@ export function FileUpload({ onFileProcessed, disabled }: FileUploadProps) {
     const maxSize = 40 * 1024 * 1024;
     if (file.size > maxSize) {
       toast({
-        title: "文件过大",
-        description: "文件大小不能超过 40MB",
+        title: "File too large",
+        description: "File size must not exceed 40MB",
         variant: "destructive",
       });
       return;
@@ -99,7 +99,7 @@ export function FileUpload({ onFileProcessed, disabled }: FileUploadProps) {
       const formData = new FormData();
       formData.append("file", file);
 
-      // Upload file to backend (使用全局 API_BASE_URL)
+      // Upload file to backend (using global API_BASE_URL)
       const response = await fetch(`${API_BASE_URL}/api/v1/upload`, {
         method: "POST",
         body: formData,
@@ -107,7 +107,7 @@ export function FileUpload({ onFileProcessed, disabled }: FileUploadProps) {
 
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.detail || "文件上传失败");
+        throw new Error(error.detail || "File upload failed");
       }
 
       const data = await response.json();
@@ -122,13 +122,13 @@ export function FileUpload({ onFileProcessed, disabled }: FileUploadProps) {
       onFileProcessed(data.text, data.base64, file.name, data.file_path);
 
       toast({
-        title: "文件上传成功",
-        description: `已提取 ${data.chars} 个字符`,
+        title: "File uploaded successfully",
+        description: `Extracted ${data.chars} characters`,
       });
     } catch (error) {
       toast({
-        title: "上传失败",
-        description: error instanceof Error ? error.message : "文件上传失败",
+        title: "Upload failed",
+        description: error instanceof Error ? error.message : "File upload failed",
         variant: "destructive",
       });
     } finally {
@@ -186,21 +186,21 @@ export function FileUpload({ onFileProcessed, disabled }: FileUploadProps) {
         {isUploading ? (
           <div className="flex flex-col items-center gap-4">
             <Loader2 className="h-12 w-12 text-primary animate-spin" />
-            <p className="text-slate-600 dark:text-slate-400">正在上传和处理文件...</p>
+            <p className="text-slate-600 dark:text-slate-400">Uploading and processing file...</p>
           </div>
         ) : (
           <div className="flex flex-col items-center gap-4">
             <Upload className="h-12 w-12 text-slate-400" />
             <div>
               <p className="text-lg text-slate-700 dark:text-slate-300 mb-2">
-                点击或拖拽文件到此处上传
+                Click or drag file to upload
               </p>
               <p className="text-sm text-slate-500">
-                支持 PDF, DOCX, PPTX, TXT (最大 40MB)
+                Supports PDF, DOCX, PPTX, TXT (max 40MB)
               </p>
             </div>
             <Button type="button" variant="outline" size="sm" disabled={disabled}>
-              选择文件
+              Select File
             </Button>
           </div>
         )}

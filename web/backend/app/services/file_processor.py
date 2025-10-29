@@ -11,7 +11,7 @@ from pptx import Presentation
 
 logger = logging.getLogger(__name__)
 
-# 上传文件保存目录
+# Upload file save directory
 UPLOAD_DIR = Path(__file__).parent.parent.parent / "uploads"
 UPLOAD_DIR.mkdir(exist_ok=True)
 

@@ -47,33 +47,33 @@ export default function HistoryPage() {
   };
 
   const handleView = (item: HistoryItem) => {
-    // 保存到 localStorage 用于结果页面显示
+    // Save to localStorage for result page display
     localStorage.setItem("originalText", item.originalText);
     localStorage.setItem("humanizedText", item.humanizedText);
     localStorage.setItem("processingTime", item.processingTime.toString());
     
-    // 跳转到结果页面
+    // Navigate to result page
     router.push("/result");
   };
 
   const handleDelete = (id: string) => {
-    if (confirm("确定要删除这条记录吗?")) {
+    if (confirm("Are you sure you want to delete this record?")) {
       deleteHistoryItem(id);
       loadHistory();
       toast({
-        title: "已删除",
-        description: "历史记录已删除",
+        title: "Deleted",
+        description: "History record deleted",
       });
     }
   };
 
   const handleClearAll = () => {
-    if (confirm(`确定要清除所有 ${history.length} 条历史记录吗?此操作不可恢复!`)) {
+    if (confirm(`Are you sure you want to clear all ${history.length} history records? This action cannot be undone!`)) {
       clearHistory();
       loadHistory();
       toast({
-        title: "已清除",
-        description: "所有历史记录已清除",
+        title: "Cleared",
+        description: "All history records cleared",
       });
     }
   };
@@ -81,8 +81,8 @@ export default function HistoryPage() {
   const handleExport = () => {
     exportHistoryToJSON();
     toast({
-      title: "导出成功",
-      description: "历史记录已导出为 JSON 文件",
+      title: "Export successful",
+      description: "History records exported to JSON file",
     });
   };
 
@@ -94,23 +94,23 @@ export default function HistoryPage() {
       const count = await importHistoryFromJSON(file);
       loadHistory();
       toast({
-        title: "导入成功",
-        description: `已导入 ${count} 条历史记录`,
+        title: "Import successful",
+        description: `Imported ${count} history records`,
       });
     } catch (error) {
       toast({
-        title: "导入失败",
-        description: error instanceof Error ? error.message : "无法读取文件",
+        title: "Import failed",
+        description: error instanceof Error ? error.message : "Unable to read file",
         variant: "destructive",
       });
     }
     
-    // 重置 input
+    // Reset input
     event.target.value = "";
   };
 
   const formatDate = (timestamp: number) => {
-    return new Date(timestamp).toLocaleString("zh-CN", {
+    return new Date(timestamp).toLocaleString("en-US", {
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
@@ -135,9 +135,9 @@ export default function HistoryPage() {
                 <ArrowLeft className="h-5 w-5" />
               </Button>
               <div>
-                <h1 className="text-xl font-bold">历史记录</h1>
+                <h1 className="text-xl font-bold">History</h1>
                 <p className="text-sm text-slate-500">
-                  共 {stats.total} 条记录
+                  Total {stats.total} records
                 </p>
               </div>
             </div>
@@ -145,13 +145,13 @@ export default function HistoryPage() {
             <div className="flex gap-2">
               <Button variant="outline" size="sm" onClick={handleExport}>
                 <Download className="mr-2 h-4 w-4" />
-                导出
+                Export
               </Button>
               <label>
                 <Button variant="outline" size="sm" asChild>
                   <span>
                     <Upload className="mr-2 h-4 w-4" />
-                    导入
+                    Import
                   </span>
                 </Button>
                 <input
@@ -164,7 +164,7 @@ export default function HistoryPage() {
               {history.length > 0 && (
                 <Button variant="destructive" size="sm" onClick={handleClearAll}>
                   <Trash2 className="mr-2 h-4 w-4" />
-                  清空
+                  Clear
                 </Button>
               )}
             </div>
@@ -176,23 +176,23 @@ export default function HistoryPage() {
       <div className="container mx-auto px-4 py-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Card className="p-4">
-            <div className="text-sm text-slate-500">总记录数</div>
+            <div className="text-sm text-slate-500">Total Records</div>
             <div className="text-2xl font-bold">{stats.total}</div>
           </Card>
           <Card className="p-4">
-            <div className="text-sm text-slate-500">处理字符数</div>
+            <div className="text-sm text-slate-500">Characters Processed</div>
             <div className="text-2xl font-bold">
               {stats.totalCharactersProcessed.toLocaleString()}
             </div>
           </Card>
           <Card className="p-4">
-            <div className="text-sm text-slate-500">总处理时间</div>
+            <div className="text-sm text-slate-500">Total Processing Time</div>
             <div className="text-2xl font-bold">
               {formatTime(stats.totalProcessingTime)}
             </div>
           </Card>
           <Card className="p-4">
-            <div className="text-sm text-slate-500">平均处理时间</div>
+            <div className="text-sm text-slate-500">Avg Processing Time</div>
             <div className="text-2xl font-bold">
               {formatTime(Math.round(stats.averageProcessingTime))}
             </div>
@@ -205,12 +205,12 @@ export default function HistoryPage() {
         {history.length === 0 ? (
           <Card className="p-12 text-center">
             <FileText className="mx-auto h-12 w-12 text-slate-400 mb-4" />
-            <h3 className="text-lg font-semibold mb-2">暂无历史记录</h3>
+            <h3 className="text-lg font-semibold mb-2">No history records</h3>
             <p className="text-slate-500 mb-4">
-              处理文本后会自动保存历史记录
+              History records are automatically saved after processing text
             </p>
             <Button onClick={() => router.push("/")}>
-              开始处理文本
+              Start Processing Text
             </Button>
           </Card>
         ) : (
