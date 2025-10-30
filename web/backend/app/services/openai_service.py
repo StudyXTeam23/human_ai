@@ -23,6 +23,12 @@ class OpenAIService:
         self.model = settings.openai_model
         self.api_url = settings.openai_api_url
         
+        # Validate API key early to avoid sending an empty Authorization header
+        if not self.api_key or not self.api_key.strip():
+            raise ValueError(
+                "Missing OPENAI_API_KEY – please set it in web/backend/.env or environment variables."
+            )
+        
         # Initialize tokenizer for the model
         try:
             self.encoding = tiktoken.encoding_for_model(self.model)
