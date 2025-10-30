@@ -5,7 +5,7 @@
 import { API_BASE_URL, getApiUrl } from './config';
 
 // Compatible export for use by other files
-export { API_BASE_URL };
+export { API_BASE_URL, getApiUrl };
 
 interface HumanizeRequest {
   source: {
