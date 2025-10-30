@@ -14,8 +14,8 @@ class Settings(BaseSettings):
     ]
     log_level: str = "INFO"
     
-    # OpenAI API Configuration
-    openai_api_key: str = "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"
+    # OpenAI API Configuration (loaded from environment: OPENAI_API_KEY)
+    openai_api_key: str = ""
     openai_model: str = "gpt-4o-mini"  # Use a stable model
     openai_api_url: str = "https://api.openai.com/v1/chat/completions"
 
